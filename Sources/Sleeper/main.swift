@@ -2,15 +2,9 @@ import AppKit
 import SleeperApp
 
 let args = CommandLine.arguments
-if let i = args.firstIndex(of: "--art-preview"), i + 1 < args.count {
+if let i = args.firstIndex(of: "--cut-assets"), i + 2 < args.count {
     MainActor.assumeIsolated {
-        do { try SleeperLauncher.writeArtPreview(to: args[i + 1]) } catch { print("art preview failed: \(error)") }
-    }
-    exit(0)
-}
-if let i = args.firstIndex(of: "--vector-sample"), i + 1 < args.count {
-    MainActor.assumeIsolated {
-        do { try SleeperLauncher.writeVectorSample(to: args[i + 1]) } catch { print("vector sample failed: \(error)") }
+        do { try SleeperLauncher.cutAssets(raw: args[i + 1], out: args[i + 2]) } catch { print("cutting failed: \(error)") }
     }
     exit(0)
 }

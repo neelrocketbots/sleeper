@@ -8,6 +8,8 @@ import SwiftUI
     var isMoving = false
     let isFloating = true
     var glow: NotchGlowState = .off
+    /// Hanging from the notch (true) or floating as a card.
+    var docked = false
     weak var panel: NSPanel?
     private var sweeps = 0
     private var moveStart: (pointer: CGPoint, origin: CGPoint)?
@@ -22,7 +24,10 @@ import SwiftUI
         geometry = g
     }
 
-    var size: CGSize { geometry.expandedSize }
+    /// Folded into the notch: a small strip the width of the notch plus room for status on each side.
+    var collapsed = false
+    var collapsedSize: CGSize { CGSize(width: geometry.notch.width + 170, height: max(32, geometry.notch.height)) }
+    var size: CGSize { collapsed ? collapsedSize : geometry.expandedSize }
     var panelSize: CGSize { CGSize(width: size.width + 2 * NotchFloat.margin, height: size.height + 2 * NotchFloat.margin) }
     var minHeight: Double { 420 }
     var maxHeight: Double { Double(panel?.screen?.visibleFrame.height ?? 900) - NotchResize.dockClearance }
@@ -76,6 +81,40 @@ import SwiftUI
         panel.setFrame(CGRect(x: panel.frame.minX, y: top - s.height, width: s.width, height: s.height), display: true)
     }
 
+    /// Hang the island from the notch: centred, its top edge flush with the top of the screen.
+    func dock(animate: Bool = false) {
+        guard let panel, let screen = panel.screen ?? NSScreen.main else { return }
+        docked = true
+        let s = panelSize
+        panel.setFrame(CGRect(x: screen.frame.midX - s.width / 2, y: screen.frame.maxY - s.height + NotchFloat.margin,
+                              width: s.width, height: s.height), display: true, animate: animate)
+    }
+
+    /// Fold into the notch (always docks).
+    func collapse() {
+        collapsed = true
+        dock()
+    }
+
+    /// Open out of the notch to the full island.
+    func expand() {
+        collapsed = false
+        dock()
+    }
+
+    /// Set while the user drags the island, so programmatic moves never snap it.
+    var userDragged = false
+
+    /// After a drag: snap into the notch when let go near it, otherwise float.
+    func settleAfterDrag() {
+        guard userDragged, let panel, let screen = panel.screen ?? NSScreen.main else { return }
+        let islandTop = panel.frame.maxY - NotchFloat.margin
+        if screen.frame.maxY - islandTop < 70 && abs(panel.frame.midX - screen.frame.midX) < 180 { dock() } else { docked = false }
+        userDragged = false
+    }
+
+    func toggleDock() { if docked { docked = false; placeAtTopCentre() } else { dock() } }
+
     func placeAtTopCentre() {
         guard let panel, let visible = (panel.screen ?? NSScreen.main)?.visibleFrame else { return }
         let s = panelSize
@@ -92,7 +131,8 @@ final class IslandPanel: NSPanel {
         isOpaque = false
         backgroundColor = .clear
         hasShadow = false
-        level = .floating
+        // Above the menu bar, so it can hang from the notch.
+        level = NSWindow.Level(rawValue: NSWindow.Level.mainMenu.rawValue + 2)
         collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         animationBehavior = .none
         isMovableByWindowBackground = false

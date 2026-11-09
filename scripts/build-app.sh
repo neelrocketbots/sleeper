@@ -7,6 +7,8 @@ APP=.build/app/Sleeper.app
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp .build/release/Sleeper "$APP/Contents/MacOS/Sleeper"
+# The painted art (SwiftPM resource bundle) goes where Bundle.module looks for it in an app.
+cp -R .build/release/Sleeper_SleeperApp.bundle "$APP/Contents/Resources/"
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

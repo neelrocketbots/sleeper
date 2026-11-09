@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sleeper art styles</title>
+<style>
+  :root { --bg:#0b0f14; --card:#141a22; --ink:#eef2f6; --soft:#9aa8b6; --line:#243040; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 -apple-system, system-ui, sans-serif; }
+  header { max-width:1400px; margin:0 auto; padding:36px 24px 8px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  header p { margin:0; color:var(--soft); max-width:820px; }
+  .grid { max-width:1400px; margin:0 auto; padding:20px 24px 60px; display:grid; grid-template-columns:repeat(auto-fit, minmax(620px, 1fr)); gap:22px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .card img { width:100%; display:block; background:#05080c; }
+  .card .crew { border-top:1px solid var(--line); }
+  .meta { padding:14px 16px 16px; }
+  .meta h2 { margin:0 0 4px; font-size:18px; }
+  .meta p { margin:0 0 6px; color:var(--soft); font-size:13.5px; }
+  .meta .row { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .tag { font-size:12px; padding:3px 9px; border-radius:999px; border:1px solid var(--line); color:var(--soft); }
+  .pending { padding:40px; text-align:center; color:var(--soft); }
+  @media (max-width:680px) { .grid { grid-template-columns:1fr; } }
+</style></head>
+<body>
+<header>
+  <h1>Sleeper: four art styles, same scene</h1>
+  <p>The Mess Hall in 2.5D with the crew, then the crew in twelve colours. Every style uses one shared axolotl, recoloured per player.</p>
+</header>
+<div class="grid">
+  <div class="card"><img src="pixel-scene.png" alt="Pixel art Mess Hall"><img class="crew" src="pixel-crew.png" alt="Pixel art crew">
+    <div class="meta"><h2>Hi-bit pixel (current)</h2><p>Drawn in code from pixel grids. Crisp, retro, textured.</p>
+    <div class="row"><span class="tag">built</span><span class="tag">cheapest to change</span><span class="tag">smallest memory</span></div></div></div>
+  <div class="card"><img src="vector-scene.png" alt="Flat vector Mess Hall"><img class="crew" src="vector-crew.png" alt="Flat vector crew">
+    <div class="meta"><h2>Flat vector</h2><p>Drawn in code with vector shapes. Clean, modern, sharp at any island size.</p>
+    <div class="row"><span class="tag">code-drawn</span><span class="tag">few hours to switch</span></div></div></div>
+  <div class="card"><img src="clay-scene.png" alt="Claymation Mess Hall"><img class="crew" src="clay-crew.png" alt="Claymation crew">
+    <div class="meta"><h2>Claymation</h2><p>Generated grey clay sprites, tinted per player in code; generated clay room. Most distinctive and warm.</p>
+    <div class="row"><span class="tag">image-model assets</span><span class="tag">rooms and props need generating</span><span class="tag">walk frames hold up</span></div></div></div>
+  <div class="card" id="story"><img src="storybook-scene.png" alt="Storybook Mess Hall" onerror="this.outerHTML='<div class=pending>Storybook still rendering…</div>'"><img class="crew" src="storybook-crew.png" alt="Storybook crew" onerror="this.remove()">
+    <div class="meta"><h2>Storybook (ink and watercolour)</h2><p>Generated ink-and-wash sprites, tinted per player in code; generated painted room.</p>
+    <div class="row"><span class="tag">image-model assets</span><span class="tag">softer, lower contrast</span></div></div></div>
+</div>
+</body></html>

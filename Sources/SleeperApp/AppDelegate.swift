@@ -11,6 +11,7 @@ import SwiftUI
     private var statusItem: NSStatusItem?
     private var keyMonitor: Any?
     private var mouseMonitor: Any?
+    private var moveSerial = 0
     private var hotKey: HotKey?
     var snapshotDir: URL?
     var selfTest = false
@@ -31,7 +32,7 @@ import SwiftUI
         container.addSubview(host)
         panel.contentView = container
         island.panel = panel
-        island.placeAtTopCentre()
+        island.dock()
         self.panel = panel
         self.island = island
 
@@ -45,15 +46,35 @@ import SwiftUI
         // included). Double-click the band to send it back to the top centre.
         mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown]) { [weak self] e in
             guard let self, let panel = self.panel, let island = self.island, e.window === panel else { return e }
+            if island.collapsed { self.show(); return nil }
             let p = e.locationInWindow
             let m = NotchFloat.margin
             let band = max(32, island.geometry.notch.height)
             let top = panel.frame.height - m
             guard p.x >= m, p.x <= panel.frame.width - m, p.y <= top, p.y >= top - band else { return e }
-            if e.clickCount == 2 { island.placeAtTopCentre(); return nil }
+            if e.clickCount == 2 { island.toggleDock(); return nil }
             panel.makeKey()
+            let wasDocked = island.docked, start = panel.frame
+            island.docked = false
+            island.userDragged = true
             panel.performDrag(with: e)
+            // A click that didn't move anything leaves the island as it was. A real drag settles when the window
+            // stops moving (see the move observer).
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                if panel.frame == start { island.docked = wasDocked; island.userDragged = false }
+            }
             return nil
+        }
+        NotificationCenter.default.addObserver(forName: NSWindow.didMoveNotification, object: panel, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self else { return }
+                self.moveSerial += 1
+                let serial = self.moveSerial
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    guard serial == self.moveSerial, let island = self.island, !island.docked else { return }
+                    island.settleAfterDrag()
+                }
+            }
         }
         NotificationCenter.default.addObserver(forName: NSWindow.didResignKeyNotification, object: panel, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated {
@@ -65,6 +86,18 @@ import SwiftUI
             MainActor.assumeIsolated { self?.controller.paused = false }
         }
         show()
+        if ProcessInfo.processInfo.environment["SLEEPER_DOCK_DEBUG"] != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                let sc = panel.screen ?? NSScreen.main!
+                print("screen", sc.frame, "visible", sc.visibleFrame, "safeTop", sc.safeAreaInsets.top)
+                print("notch", island.geometry.notch, "panel", panel.frame, "islandTop", panel.frame.maxY - NotchFloat.margin)
+                island.collapse()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    print("collapsed panel", panel.frame, "islandTop", panel.frame.maxY - NotchFloat.margin)
+                    NSApp.terminate(nil)
+                }
+            }
+        }
         if selfTest {
             controller.snapshotMode = true
             activity = ProcessInfo.processInfo.beginActivity(options: [.userInitiated, .latencyCritical], reason: "Self-test")
@@ -86,7 +119,8 @@ import SwiftUI
         let down = e.type == .keyDown
         if e.keyCode == 53 {  // Esc
             guard down else { return true }
-            if controller.miniGame != nil { controller.closeMiniGame() }
+            if controller.chatOpen { controller.closeChat() }
+            else if controller.miniGame != nil { controller.closeMiniGame() }
             else if controller.showMap { controller.showMap = false }
             else { fold() }
             return true
@@ -102,7 +136,10 @@ import SwiftUI
         play.keyEquivalentModifierMask = [.control, .option]
         play.target = self
         menu.addItem(play)
-        let recentre = NSMenuItem(title: "Move to Top Centre", action: #selector(menuRecentre), keyEquivalent: "")
+        let attach = NSMenuItem(title: "Attach to Notch", action: #selector(menuAttach), keyEquivalent: "")
+        attach.target = self
+        menu.addItem(attach)
+        let recentre = NSMenuItem(title: "Float at Top Centre", action: #selector(menuRecentre), keyEquivalent: "")
         recentre.target = self
         menu.addItem(recentre)
         menu.addItem(.separator())
@@ -114,23 +151,31 @@ import SwiftUI
     }
 
     @objc private func menuShow() { show() }
-    @objc private func menuRecentre() { island?.placeAtTopCentre() }
+    @objc private func menuRecentre() { island?.docked = false; island?.placeAtTopCentre() }
+    @objc private func menuAttach() { island?.dock() }
     @objc private func menuQuit() { NSApp.terminate(nil) }
 
-    func toggle() { if panel?.isVisible == true && panel?.isKeyWindow == true { fold() } else { show() } }
+    func toggle() { if island?.collapsed == false && panel?.isKeyWindow == true { fold() } else { show() } }
 
+    /// Open the island (out of the notch if it was folded) and take the keyboard.
     func show() {
-        guard let panel else { return }
+        guard let panel, let island else { return }
+        if island.collapsed { island.expand() }
         NSApp.activate()
         panel.makeKeyAndOrderFront(nil)
         controller.paused = false
-        island?.sweep()
+        island.sweep()
     }
 
+    /// Fold into the notch: the game pauses and the keyboard goes back to the app you were using.
     func fold() {
         controller.releaseAllKeys()
         controller.paused = true
-        panel?.orderOut(nil)
+        controller.closeMiniGame()
+        island?.collapse()
+        panel?.resignKey()
+        NSApp.deactivate()
+        panel?.orderFrontRegardless()
     }
 }
 

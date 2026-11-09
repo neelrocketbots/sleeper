@@ -79,12 +79,14 @@ import SleeperCore
             guard let g = self.c.game else { return }
             self.check(g.me.done.contains(taskStation), "pressing the arrows in order finishes a sequence task")
         }
-        // A body: report it with R.
+        // A body: report it with R. Put the victim somewhere open first (the middle of Kelp Farm).
         at(0.2) {
             guard let g = self.c.game else { return }
+            if case .meeting = g.phase { g.humanVote(.skip) }
             let victim = g.players.first { !$0.isTraitor && !$0.isHuman && $0.alive }!.id
+            g.debugMove(victim, to: TilePos(27, 9).center)
             g.debugKill(victim)
-            g.debugMove(0, to: g.bodies[0].pos + Vec2(0.4, 0))
+            g.debugMove(0, to: TilePos(27, 9).center + Vec2(0.6, 0))
         }
         at(0.2) {
             guard let g = self.c.game else { return }
@@ -96,6 +98,11 @@ import SleeperCore
             guard let g = self.c.game, case .meeting(let m) = g.phase else { self.check(false, "meeting still running"); return }
             self.check(!m.lines.isEmpty, "AI crew speak in the meeting (\(m.lines.count) lines)")
             self.press(8)  // C: claim a room
+            self.press(17) // T: open the text box
+            self.check(self.c.chatOpen, "T opens the meeting text box")
+            self.c.chatText = "I think \(g.players[2].name) is lying"
+            self.c.sendChat()
+            if case .meeting(let m2) = g.phase { self.check(m2.lines.contains { $0.speaker == g.you && $0.text.contains("lying") }, "a typed message shows in the meeting") }
             self.press(1)  // S: skip
         }
         at(0.3) {

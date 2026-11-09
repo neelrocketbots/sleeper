@@ -350,6 +350,9 @@ public final class Game {
         case .vouch(let t): text = "\(players[t].name) was with me. They're fine."
         case .was(let room): text = "I was in \(room)."
         case .saw(let t, let room): text = "I saw \(players[t].name) in \(room)."
+        case .free(let typed):
+            text = String(typed.trimmingCharacters(in: .whitespacesAndNewlines).prefix(160))
+            guard !text.isEmpty else { return }
         }
         say(you, text)
         hear(statement, from: you)
@@ -437,6 +440,8 @@ public enum HumanStatement: Sendable, Equatable {
     case vouch(Int)
     case was(String)
     case saw(Int, String)
+    /// Anything typed. The crew pick out names, rooms and intent from it.
+    case free(String)
 }
 
 struct PendingLine {

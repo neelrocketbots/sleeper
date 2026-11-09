@@ -66,16 +66,17 @@ struct Hint: View {
     }
 }
 
-/// The axolotl as a hard-pixel image.
+/// The painted axolotl with its hat. `scale` keeps the old sizing: about 18 × scale points tall.
 struct Portrait: View {
     let color: PlayerColor
     let hat: Hat
     var scale: CGFloat = 3
     var dead = false
     var body: some View {
-        Image(nsImage: CharacterArt.portrait(color, hat, scale: 1, dead: dead))
-            .interpolation(.none)
+        Image(nsImage: StoryArt.portrait(color, hat, dead: dead))
+            .interpolation(.high)
             .resizable()
-            .frame(width: 16 * scale, height: 18 * scale)
+            .scaledToFit()
+            .frame(height: 20 * scale)
     }
 }

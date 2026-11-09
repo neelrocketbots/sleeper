@@ -9,14 +9,14 @@ struct GameOverlays: View {
     var body: some View {
         ZStack {
             switch game.phase {
-            case .intro: RoleReveal(game: game)
+            case .intro: RoleReveal(rev: controller.revision, game: game)
             case .playing:
-                HUDView(controller: controller, game: game)
-                if controller.showMap { MapOverlay(game: game) }
+                HUDView(rev: controller.revision, controller: controller, game: game)
+                if controller.showMap { MapOverlay(rev: controller.revision, game: game) }
                 if let mg = controller.miniGame { MiniGameView(state: mg) }
-            case .meeting(let m): MeetingView(controller: controller, game: game, meeting: m)
-            case .ejection(let e, _): EjectionView(game: game, ejection: e)
-            case .over(let w, let reason): GameOverView(game: game, winner: w, reason: reason)
+            case .meeting(let m): MeetingView(rev: controller.revision, controller: controller, game: game, meeting: m)
+            case .ejection(let e, _): EjectionView(rev: controller.revision, game: game, ejection: e)
+            case .over(let w, let reason): GameOverView(rev: controller.revision, game: game, winner: w, reason: reason)
             }
             VStack(spacing: 6) {
                 ForEach(controller.toasts) { t in
@@ -35,6 +35,7 @@ struct GameOverlays: View {
 }
 
 struct RoleReveal: View {
+    var rev = 0
     let game: Game
     var body: some View {
         let me = game.me
@@ -60,6 +61,7 @@ struct RoleReveal: View {
 }
 
 struct HUDView: View {
+    var rev = 0
     let controller: GameController
     let game: Game
     var body: some View {
@@ -84,12 +86,12 @@ struct HUDView: View {
                 .padding(10)
                 .panel(radius: 12)
                 Spacer()
-                if game.sabotage.isActive { SabotageCard(game: game) }
+                if game.sabotage.isActive { SabotageCard(rev: rev, game: game) }
             }
             Spacer()
             HStack(alignment: .bottom) {
                 Spacer()
-                ActionBar(game: game)
+                ActionBar(rev: rev, game: game)
             }
         }
         .padding(10)
@@ -97,6 +99,7 @@ struct HUDView: View {
 }
 
 struct SabotageCard: View {
+    var rev = 0
     let game: Game
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
@@ -118,6 +121,7 @@ struct SabotageCard: View {
 
 /// The context actions, bottom right.
 struct ActionBar: View {
+    var rev = 0
     let game: Game
     var body: some View {
         let me = game.me
@@ -157,6 +161,7 @@ struct ActionButton: View {
 
 /// Tab: the whole station, with you, your tasks and any sabotage consoles.
 struct MapOverlay: View {
+    var rev = 0
     let game: Game
     var body: some View {
         ZStack {
@@ -168,11 +173,12 @@ struct MapOverlay: View {
                 func rect(_ r: TileRect) -> CGRect {
                     CGRect(x: ox + CGFloat(r.x0) * s, y: oy + CGFloat(r.y0) * s, width: CGFloat(r.width) * s, height: CGFloat(r.height) * s)
                 }
-                for c in map.corridors { g.fill(Path(rect(c)), with: .color(.white.opacity(0.12))) }
+                for c in map.corridors { g.fill(Path(rect(c)), with: .color(Color(red: 0.6, green: 0.85, blue: 1).opacity(0.18))) }
                 for r in map.rooms {
-                    g.fill(Path(roundedRect: rect(r.rect), cornerRadius: 4), with: .color(.white.opacity(0.18)))
-                    g.draw(Text(r.name).font(Theme.body(10, .semibold)).foregroundStyle(Theme.soft),
-                           at: CGPoint(x: rect(r.rect).midX, y: rect(r.rect).minY + 9))
+                    let d = CGRect(x: ox + (r.center.x - r.radius) * s, y: oy + (r.center.y - r.radius) * s, width: r.radius * 2 * s, height: r.radius * 2 * s)
+                    g.fill(Path(ellipseIn: d), with: .color(.white.opacity(0.16)))
+                    g.stroke(Path(ellipseIn: d), with: .color(.white.opacity(0.3)), lineWidth: 1)
+                    g.draw(Text(r.name).font(Theme.body(10, .semibold)).foregroundStyle(Theme.soft), at: CGPoint(x: d.midX, y: d.minY + 12))
                 }
                 let me = game.me
                 for sid in me.tasks where !me.done.contains(sid) && !me.isTraitor {

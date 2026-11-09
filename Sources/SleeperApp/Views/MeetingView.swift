@@ -82,6 +82,7 @@ struct MiniGameView: View {
 }
 
 struct MeetingView: View {
+    var rev = 0
     let controller: GameController
     let game: Game
     let meeting: Meeting
@@ -140,8 +141,11 @@ struct MeetingView: View {
                     .panel(radius: 12)
                 }
                 // Controls.
-                if me.alive {
+                if me.alive && controller.chatOpen {
+                    ChatBox(controller: controller)
+                } else if me.alive {
                     HStack(spacing: 12) {
+                        Hint(key: "T", text: "type")
                         Hint(key: "← → ↑ ↓", text: "pick")
                         Hint(key: "A", text: "accuse")
                         Hint(key: "V", text: "vouch")
@@ -184,6 +188,28 @@ struct MeetingView: View {
     }
 }
 
+/// The meeting's text box. Enter sends, Esc closes.
+struct ChatBox: View {
+    let controller: GameController
+    @FocusState private var focused: Bool
+    var body: some View {
+        HStack(spacing: 10) {
+            TextField("Say something… name names, say where you were", text: Binding(
+                get: { controller.chatText }, set: { controller.chatText = String($0.prefix(160)) }))
+                .textFieldStyle(.plain)
+                .font(Theme.body(13))
+                .foregroundStyle(Theme.ink)
+                .focused($focused)
+                .onSubmit { controller.sendChat() }
+            Hint(key: "Enter", text: "send")
+            Hint(key: "Esc", text: "close")
+        }
+        .padding(.horizontal, 12).padding(.vertical, 8)
+        .panel(tint: Theme.accent, radius: 10)
+        .onAppear { focused = true }
+    }
+}
+
 struct PlayerTile: View {
     let player: Player
     let selected: Bool
@@ -211,6 +237,7 @@ struct PlayerTile: View {
 }
 
 struct EjectionView: View {
+    var rev = 0
     let game: Game
     let ejection: Ejection
     var body: some View {
@@ -241,6 +268,7 @@ struct EjectionView: View {
 }
 
 struct GameOverView: View {
+    var rev = 0
     let game: Game
     let winner: Winner
     let reason: String

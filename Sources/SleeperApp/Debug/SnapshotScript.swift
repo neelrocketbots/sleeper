@@ -25,7 +25,7 @@ import SpriteKit
         at(0.2, "") { c.roleChoice = .crew; c.startGame(seed: 42) }
         at(1.0, "02-intro")
         at(4.0, "03-playing")
-        at(0.2, "") { if let g = c.game { g.debugMove(0, to: TilePos(21, 5).center) } }
+        at(0.2, "") { if let g = c.game { g.debugMove(0, to: TilePos(26, 6).center) } }
         at(1.2, "04-kelp-farm")
         at(0.2, "") { if let g = c.game { g.debugSabotage(.lights) } }
         at(1.2, "05-lights-out")
@@ -46,9 +46,9 @@ import SpriteKit
             c.closeMiniGame()
             if let g = c.game {
                 let victim = g.players.first { !$0.isTraitor && !$0.isHuman }!.id
-                g.debugMove(victim, to: TilePos(23, 7).center)
+                g.debugMove(victim, to: TilePos(27, 9).center)
                 g.debugKill(victim)
-                g.debugMove(0, to: TilePos(22, 7).center)
+                g.debugMove(0, to: TilePos(26, 9).center)
             }
         }
         at(1.0, "09-body")

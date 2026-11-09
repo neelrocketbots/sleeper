@@ -55,6 +55,9 @@ struct Toast: Identifiable, Equatable {
     // Meeting UI
     var meetingSelection = 0
     var claimRoom = 0
+    /// The meeting's text box is open: keys go to it, not the game.
+    var chatOpen = false
+    var chatText = ""
     var saidThisMeeting: Set<String> = []
 
     private var keys: Set<UInt16> = []
@@ -175,7 +178,20 @@ struct Toast: Identifiable, Equatable {
         if toasts.count > 3 { toasts.removeFirst() }
     }
 
+    func sendChat() {
+        let text = chatText
+        chatText = ""
+        chatOpen = false
+        guard let game, !text.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        game.humanSay(.free(text))
+        revision += 1
+    }
+
+    func closeChat() { chatOpen = false; revision += 1 }
+
     private func enterMeeting() {
+        chatOpen = false
+        chatText = ""
         miniGame = nil
         showMap = false
         meetingSelection = 0
@@ -187,6 +203,7 @@ struct Toast: Identifiable, Equatable {
 
     /// Returns true when the key was used.
     func key(down: Bool, code: UInt16, repeat isRepeat: Bool) -> Bool {
+        if chatOpen { return false }  // typing a message
         if down { keys.insert(code) } else { keys.remove(code) }
         switch screen {
         case .lobby: return down ? lobbyKey(code) : true
@@ -346,6 +363,8 @@ struct Toast: Identifiable, Equatable {
 
     private func meetingKey(_ code: UInt16) -> Bool {
         guard let game, case .meeting(let m) = game.phase else { return true }
+        // T opens the text box; while it's open, keys belong to it.
+        if code == 17, game.me.alive { chatOpen = true; revision += 1; return true }
         let n = game.players.count
         let sel = game.players[meetingSelection % n]
         let canAct = game.me.alive && m.votes[game.you] == nil

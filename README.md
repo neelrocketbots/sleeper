@@ -1,7 +1,7 @@
 # Sleeper
 
-A social deduction game that floats out of the MacBook notch. Eight axolotls run **The Abyss**, a research station on the
-deep ocean floor. One of them is a traitor.
+A social deduction game that opens out of the MacBook notch. Eight axolotls run **The Abyss**: domes on the deep ocean
+floor, joined by glass tunnels. One of them is a traitor. Painted in a storybook style, ink and watercolour.
 
 ![Playing in the Mess Hall](docs/screenshots/03-playing.png)
 
@@ -14,8 +14,9 @@ open .build/app/Sleeper.app
 
 Or straight from source: `swift run Sleeper`.
 
-The island opens near the top of the screen. A bubbles icon sits in the menu bar. **⌃⌥S** shows or folds the island from
-any app.
+The island opens hanging from the notch. **Esc** folds it back into the notch (the game pauses) and **⌃⌥S** or a click
+opens it again. Drag the header to float it anywhere; drop it at the top centre to attach it to the notch again
+(double-click the header does the same). A bubbles icon sits in the menu bar.
 
 ## How to play
 
@@ -29,7 +30,7 @@ You and seven AI crew. Your role is random (change it in the lobby with **R**).
 | Q | Take out a crewmate (traitor only, cooldown 25 s) |
 | 1 / 2 | Sabotage lights / oxygen (traitor only) |
 | Tab or M | Station map with your tasks |
-| Esc | Close a task, or fold the island (the game pauses) |
+| Esc | Close a task, or fold the island into the notch (the game pauses) |
 
 **Crew** win by finishing every task or voting out the traitor. Tasks are small mini-games: hold E to fill a gauge, press
 arrows in order, or stop a needle in the green three times. Yellow `!` markers show your task stations.
@@ -38,7 +39,8 @@ arrows in order, or stop a needle in the green three times. Yellow `!` markers s
 sight until someone fixes the panel in Thermal Vent. The oxygen leak needs both consoles sealed (Pressure Lock and Ballast
 Tanks) within 45 s.
 
-You only see what your axolotl can see. Walls block sight, so other players vanish into the dark. Dead crew become
+You only see what your axolotl can see. Dome hulls block sight; tunnel glass doesn't, so you can watch the sea (and
+other tunnels) as you swim between domes. Dead crew become
 ghosts: they can still finish tasks but can't speak or vote.
 
 ### Meetings
@@ -49,6 +51,7 @@ near the body. Then everyone votes.
 
 | Key | In a meeting |
 | --- | --- |
+| T | Type a message (Enter sends). Name a player or colour to accuse or clear them; "I was in Kelp Farm" is an alibi |
 | Arrows | Pick a player |
 | A / V | Accuse / vouch for the picked player |
 | [ ] then C | Choose a room, then say "I was in …" |
@@ -65,10 +68,11 @@ their exact wording. Without the model, the built-in lines are used.
 - `Sources/SleeperCore`: the game, with no UI. It has the map, A* pathfinding, line of sight, rules, AI crew and traitor,
   and meetings. It runs on a fixed 30 Hz step with a seeded RNG, so a network layer can drive it later.
 - `Sources/SleeperApp`: the NotchKit floating island, the SpriteKit scene and SwiftUI overlays.
-  - The map is baked into a single texture. Lights are additive glows. A line-of-sight fog texture is updated 30 times a
-    second.
-  - The hi-bit pixel art is generated in code from palette-indexed grids. There is one axolotl drawing, recoloured for 12
-    player colours, plus 5 hats.
+  - Domes, glass tunnels and the sea are painted in code from generated storybook textures (floor, wall, grating) and
+    drawn once per game. Props, hats and the axolotl are generated storybook art in `Sources/SleeperApp/Assets`.
+  - One grey axolotl, recoloured in code for 12 player colours (the vest and buckle keep their colours), with 5 hats.
+  - 2.5D: everything is depth-sorted by where it stands, so axolotls pass behind tanks and the front of each dome's hull.
+  - A line-of-sight fog texture is updated 30 times a second.
 - `docs/SPEC.md`: the decisions from brainstorming, and the rules.
 
 ## Checks
@@ -77,7 +81,7 @@ their exact wording. Without the model, the built-in lines are used.
 swift test                                   # rules, map, AI games to completion, balance, meeting honesty
 .build/debug/Sleeper --selftest              # plays through the real key path and prints PASS/FAIL
 .build/debug/Sleeper --snapshots /tmp/snaps  # scripted game, renders each screen to PNG (no screen recording needed)
-.build/debug/Sleeper --art-preview /tmp/art  # the baked map and the character sheet
+.build/debug/Sleeper --cut-assets <raw> Sources/SleeperApp/Assets  # cut generated sheets into game sprites
 ```
 
 With the human idle, AI-only games split roughly evenly between crew and traitor wins, and a round lasts about 4–5

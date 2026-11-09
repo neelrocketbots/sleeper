@@ -32,7 +32,7 @@ final class Brain {
     /// Decided once per sabotage: the station this AI goes to fix, or -1 for "not me".
     var sabotageResponse: Int?
     var lastRoom = "Mess Hall"
-    /// Where this AI has been: (time it entered, room name or "Corridor").
+    /// Where this AI has been: (time it entered, room name or the tunnel name).
     var roomLog: [(time: Double, room: String)] = []
     var lastTask: String?
     var selfReportAt: Double?
@@ -68,7 +68,7 @@ extension Brain {
         var out: [String] = []
         for (i, e) in roomLog.enumerated() {
             let end = i + 1 < roomLog.count ? roomLog[i + 1].time : t1
-            guard end >= t0, e.time <= t1, e.room != "Corridor" else { continue }
+            guard end >= t0, e.time <= t1, e.room != GameMap.tunnelName else { continue }
             if out.last != e.room { out.removeAll { $0 == e.room }; out.append(e.room) }
         }
         return out
@@ -82,7 +82,7 @@ let alibiWindow = 15.0
 func roomList(_ all: [String]) -> String {
     let rooms = Array(all.suffix(3))
     switch rooms.count {
-    case 0: return "the corridors"
+    case 0: return "the tunnels"
     case 1: return rooms[0]
     default: return rooms.dropLast().joined(separator: ", ") + ", then " + rooms.last!
     }
@@ -102,7 +102,7 @@ extension Game {
             perceive(b)
         }
         let here = map.roomName(at: p.pos.tile)
-        if here != "Corridor" { b.lastRoom = here }
+        if here != GameMap.tunnelName { b.lastRoom = here }
         if b.roomLog.last?.room != here {
             b.roomLog.append((time, here))
             if b.roomLog.count > 40 { b.roomLog.removeFirst(b.roomLog.count - 40) }
@@ -461,7 +461,7 @@ extension Game {
                 case .was(let rooms):
                     // Caught out: I saw them somewhere else in the same stretch of time.
                     guard !players[id].isTraitor, !rooms.isEmpty, let s = b.sightings[speaker], !rooms.contains(s.room),
-                          s.room != "Corridor", s.time >= meetingStart - alibiWindow, s.time <= meetingStart else { continue }
+                          s.room != GameMap.tunnelName, s.time >= meetingStart - alibiWindow, s.time <= meetingStart else { continue }
                     b.suspicion[speaker, default: 0] += 40
                     let reply = "Wait, \(players[speaker].name), I saw you in \(s.room) just before. You weren't in \(roomList(rooms))."
                     if case .meeting(let m) = phase {
@@ -479,6 +479,57 @@ extension Game {
         case .vouch(let t): hear([.vouch(t)], from: speaker)
         case .was(let room): hear([.was([room])], from: speaker)
         case .saw(let t, _): hear([.accuse(t, weight: 8)], from: speaker)
+        case .free(let text):
+            let claims = understand(text, from: speaker)
+            hear(claims, from: speaker)
+            reply(to: claims, from: speaker)
+        }
+    }
+
+    /// Reads a typed message: who it names (by name or colour), whether it accuses or clears them, and any
+    /// "I was in …" alibi.
+    func understand(_ text: String, from speaker: Int) -> [Claim] {
+        let t = " " + text.lowercased() + " "
+        func has(_ words: [String]) -> Bool { words.contains { t.contains($0) } }
+        let accuseCue = has(["sus", "did it", "killer", "traitor", "it's ", "its ", "it was", "vote", "liar", "lying", "kill",
+                             "took out", "attacked", "suspicious", "weird", "lie", "eject", "fake"])
+        let vouchCue = has(["safe", "with me", "trust", "clear", "innocent", "not them", "wasn't", "was not", "isn't", "fine", "good"])
+        var named: [Int] = []
+        for p in players where p.id != speaker {
+            let n = p.name.lowercased(), c = p.color.name.lowercased()
+            if t.contains(" \(n)") || t.contains("\(n) ") || t.contains(" \(c) ") || t.contains(" \(c),") || t.contains(" \(c).") {
+                named.append(p.id)
+            }
+        }
+        var claims: [Claim] = []
+        for id in named {
+            if vouchCue && !accuseCue { claims.append(.vouch(id)) }
+            else if accuseCue { claims.append(.accuse(id, weight: 18)) }
+            else { claims.append(.accuse(id, weight: 6)) }  // just being named draws a little attention
+        }
+        if has(["i was in", "i was at", "i was by", "i was near", "been in"]) {
+            let rooms = map.rooms.map(\.name).filter { t.contains($0.lowercased()) }
+            if !rooms.isEmpty { claims.append(.was(rooms)) }
+        }
+        return claims
+    }
+
+    /// Crew who were accused out loud defend themselves; the accused traitor deflects.
+    func reply(to claims: [Claim], from speaker: Int) {
+        guard case .meeting(let m) = phase else { return }
+        for c in claims {
+            guard case .accuse(let target, let w) = c, w >= 18, players[target].alive, let b = brains[target] else { continue }
+            let rooms = b.rooms(from: meetingStart - alibiWindow, to: meetingStart)
+            let text: String
+            if players[target].isTraitor {
+                text = rng.chance(0.5) ? "Me? No way. \(players[speaker].name), you're the one acting strange."
+                                       : "It wasn't me. I was busy in \(roomList(rooms.isEmpty ? [b.lastRoom] : rooms))."
+            } else {
+                text = "It wasn't me! I was in \(roomList(rooms)). Ask anyone."
+            }
+            let claimsBack: [Claim] = players[target].isTraitor ? [.accuse(speaker, weight: 10)] : [.was(rooms)]
+            pendingLines.append(PendingLine(at: m.elapsed + 1.4 + rng.unit(), speaker: target, action: .say(text, effect: nil),
+                                            claims: claimsBack, rephrase: true))
         }
     }
 

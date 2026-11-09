@@ -2,12 +2,8 @@ import AppKit
 
 /// The entry points the executable calls.
 @MainActor public enum SleeperLauncher {
-    public static func writeArtPreview(to path: String) throws {
-        try ArtPreview.write(to: URL(fileURLWithPath: path))
-    }
-
-    public static func writeVectorSample(to path: String) throws {
-        try VectorSample.write(to: URL(fileURLWithPath: path))
+    public static func cutAssets(raw: String, out: String) throws {
+        try AssetCutter.run(raw: URL(fileURLWithPath: raw), out: URL(fileURLWithPath: out))
     }
 
     public static func run(arguments: [String]) {

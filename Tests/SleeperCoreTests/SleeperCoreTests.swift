@@ -23,10 +23,22 @@ import Testing
         } }
     }
 
-    @Test func wallsBlockSight() {
-        // Sonar and Kelp Farm are separated by a wall except for the corridor.
-        #expect(!Sight.clear(map, from: TilePos(5, 8).center, to: TilePos(22, 8).center))
-        #expect(Sight.clear(map, from: TilePos(20, 15).center, to: TilePos(31, 21).center))
+    @Test func domeHullsBlockSightButGlassDoesNot() {
+        // From inside Sonar you can't see into Kelp Farm: the hulls are in the way.
+        #expect(!Sight.clear(map, from: TilePos(8, 11).center, to: TilePos(27, 10).center))
+        // Across the Mess Hall, past the table.
+        #expect(Sight.clear(map, from: TilePos(22, 20).center, to: TilePos(32, 26).center))
+        // From the Sonar–Kelp tunnel, through its glass, out into the water.
+        #expect(map[TilePos(16, 6)] == .glass)
+        #expect(Sight.clear(map, from: TilePos(16, 7).center, to: TilePos(16, 3).center))
+    }
+
+    @Test func domesAreRoundAndTunnelsAreGlass() {
+        let mess = map.rooms[3]
+        #expect(map.room(at: TilePos(27, 23))?.name == "Mess Hall")
+        #expect(map.room(at: TilePos(mess.rect.x0, mess.rect.y0)) == nil, "the bounding box corner is outside the dome")
+        #expect(map.roomName(at: TilePos(16, 7)) == GameMap.tunnelName)
+        #expect(map.tiles.contains(.glass))
     }
 }
 
@@ -167,5 +179,37 @@ import Testing
         }
         #expect(falseCatches.isEmpty, "\(falseCatches)")
         print("traitor caught lying \(traitorCatches) times")
+    }
+}
+
+@Suite struct ChatTests {
+    func meeting() -> Game {
+        let g = Game(seed: 21, look: PlayerLook(color: .coral, hat: .none, name: "Coral"), roleChoice: .crew)
+        while case .intro = g.phase { g.step(dt: 1.0 / 30) }
+        g.debugCallMeeting(caller: 0)
+        g.pendingLines.removeAll()
+        return g
+    }
+
+    @Test func understandsAccusationsVouchesAndAlibis() {
+        let g = meeting()
+        let a = g.players[1], b = g.players[2]
+        let accuse = g.understand("I think \(a.name) is the traitor", from: 0)
+        #expect(accuse.contains { if case .accuse(let t, let w) = $0 { return t == a.id && w >= 18 }; return false })
+        let vouch = g.understand("\(b.name) was with me the whole time", from: 0)
+        #expect(vouch.contains { if case .vouch(let t) = $0 { return t == b.id }; return false })
+        let byColour = g.understand("\(a.color.name.lowercased()) is sus", from: 0)
+        #expect(byColour.contains { if case .accuse(let t, _) = $0 { return t == a.id }; return false })
+        let alibi = g.understand("I was in Kelp Farm", from: 0)
+        #expect(alibi.contains { if case .was(let r) = $0 { return r == ["Kelp Farm"] }; return false })
+    }
+
+    @Test func typedMessagesAppearAndTheAccusedReplies() {
+        let g = meeting()
+        let target = g.players.first { !$0.isHuman && $0.alive }!
+        g.humanSay(.free("I think \(target.name) did it"))
+        guard case .meeting(let m) = g.phase else { Issue.record("no meeting"); return }
+        #expect(m.lines.last?.speaker == 0)
+        #expect(g.pendingLines.contains { $0.speaker == target.id })
     }
 }
