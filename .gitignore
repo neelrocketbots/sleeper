@@ -1,0 +1,15 @@
+# Build output
+.build/
+.swiftpm/
+*.xcodeproj/
+DerivedData/
+
+# Local settings and secrets (the Copilot token lives here)
+.claude/settings.local.json
+.codex/
+
+# Brainstorm companion state and scratch files
+.superpowers/
+.playwright-cli/
+
+.DS_Store

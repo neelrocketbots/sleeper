@@ -1,0 +1,1487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notch Deception Mockups</title>
+<style>
+  :root {
+    --page: #0B0C0E;
+    --raise: #14161A;
+    --ink: #F2F3F5;
+    --soft: rgba(242,243,245,.62);
+    --faint: rgba(242,243,245,.38);
+    --line: rgba(255,255,255,.10);
+    --glass: rgba(255,255,255,.06);
+    --glass-rim: rgba(255,255,255,.14);
+    --a1: #FFB547; /* Outsider */
+    --a2: #5AD1FF; /* Whisper */
+    --a3: #6CF29B; /* Blend */
+    --a4: #FF6B4A; /* Fuse */
+    --a5: #B69CFF; /* Daily Liar */
+    --a6: #FF5FA2; /* Alibi */
+    --a7: #F5E663; /* Codeword */
+    --a8: #FF7A6E; /* Target */
+    --a9: #7FB4FF; /* Sneaky Commit */
+    --a10: #4FE0C4; /* Different Question */
+    --a11: #FFA86B; /* Fake Sketch */
+    --a12: #C6F04F; /* Off Beat */
+    --a13: #D6D9E6; /* Spot the Bot */
+    --a14: #E6B07A; /* Sleeper */
+    --bad: #FF5A5A;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--page); color: var(--ink); font: 14px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .tab { font-variant-numeric: tabular-nums; }
+  a { color: inherit; }
+
+  /* ---------- page ---------- */
+  header.top { max-width: 1320px; margin: 0 auto; padding: 48px 24px 16px; }
+  header.top h1 { font-size: 30px; font-weight: 650; letter-spacing: -.01em; margin: 0 0 8px; }
+  header.top p { color: var(--soft); max-width: 760px; margin: 0 0 18px; }
+  nav.jump { display: flex; flex-wrap: wrap; gap: 8px; position: sticky; top: 0; z-index: 10; background: rgba(11,12,14,.86); backdrop-filter: blur(12px); padding: 12px 24px; max-width: 1320px; margin: 0 auto; }
+  nav.jump a { text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--soft); font-weight: 500; font-size: 13px; }
+  nav.jump a:hover { color: var(--ink); border-color: rgba(255,255,255,.3); }
+  nav.jump a i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
+
+  section.variant { scroll-margin-top: 96px; max-width: 1320px; margin: 0 auto; padding: 56px 24px 24px; border-top: 1px solid var(--line); }
+  .vhead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 32px; margin-bottom: 28px; }
+  .vhead h2 { font-size: 24px; font-weight: 650; margin: 0 0 4px; display: flex; align-items: center; gap: 10px; }
+  .vhead h2 .num { font-size: 13px; color: var(--faint); font-weight: 500; }
+  .vhead .pitch { color: var(--soft); margin: 0 0 12px; max-width: 680px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--glass); border: 1px solid var(--line); color: var(--soft); }
+  .review { background: var(--raise); border-radius: 12px; padding: 14px 16px; font-size: 13px; }
+  .review b { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--faint); margin-bottom: 6px; font-weight: 600; }
+  .review ul { margin: 0; padding-left: 18px; color: var(--soft); }
+  .review li + li { margin-top: 4px; }
+
+  .states { display: grid; grid-template-columns: repeat(auto-fill, minmax(620px, 1fr)); gap: 28px 24px; }
+  figure.state { margin: 0; min-width: 0; }
+  figure.state figcaption { padding: 10px 2px 0; }
+  figure.state figcaption h3 { margin: 0 0 2px; font-size: 14px; font-weight: 600; }
+  figure.state figcaption p { margin: 0; color: var(--soft); font-size: 13px; }
+  .scroller { overflow-x: auto; border-radius: 14px; }
+
+  /* ---------- desktop frame ---------- */
+  .desk { position: relative; width: 620px; border-radius: 14px; overflow: hidden; background:
+      radial-gradient(120% 90% at 20% 110%, #2B3A55 0%, transparent 60%),
+      radial-gradient(90% 80% at 90% 0%, #3B2A44 0%, transparent 60%),
+      linear-gradient(180deg, #1A1E27, #232838); }
+  .desk .menubar { position: absolute; inset: 0 0 auto 0; height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font-size: 12.5px; color: rgba(255,255,255,.82); background: rgba(20,22,28,.35); backdrop-filter: blur(20px); }
+  .desk .menubar .l, .desk .menubar .r { display: flex; gap: 14px; }
+  .desk .menubar .l span:first-child { font-weight: 700; }
+  .desk .win { position: absolute; left: 34px; right: 34px; bottom: -40px; top: 70px; border-radius: 10px; background: rgba(240,242,246,.08); border: 1px solid rgba(255,255,255,.08); }
+  .desk .win::before { content: ""; position: absolute; left: 12px; top: 10px; width: 52px; height: 10px; background: radial-gradient(circle at 5px 5px, #ff5f57 4px, transparent 4.5px), radial-gradient(circle at 23px 5px, #febc2e 4px, transparent 4.5px), radial-gradient(circle at 41px 5px, #28c840 4px, transparent 4.5px); opacity: .55; }
+  .desk .win i { position: absolute; left: 24px; height: 7px; border-radius: 4px; background: rgba(255,255,255,.07); }
+
+  /* ---------- island ---------- */
+  .island { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: #000; border-radius: 0 0 30px 30px; color: var(--ink); box-shadow: 0 18px 50px rgba(0,0,0,.55), 0 0 0 .5px rgba(255,255,255,.06); }
+  .island::before, .island::after { content: ""; position: absolute; top: 0; width: 14px; height: 14px; }
+  .island::before { left: -14px; background: radial-gradient(circle at 0 100%, transparent 13.5px, #000 14px); }
+  .island::after { right: -14px; background: radial-gradient(circle at 100% 100%, transparent 13.5px, #000 14px); }
+  .island .glow { position: absolute; inset: -1px; border-radius: 0 0 31px 31px; pointer-events: none; box-shadow: 0 6px 34px -6px var(--acc); opacity: .55; }
+  .band { height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 12px; color: var(--soft); position: relative; }
+  .band .cam { position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 185px; height: 32px; }
+  .band .cam::after { content: ""; position: absolute; left: 50%; top: 11px; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #1d2433, #07080b 70%); box-shadow: 0 0 0 1px #0d0f14; transform: translateX(-50%); }
+  .band b { color: var(--ink); font-weight: 600; }
+  .band .acc { color: var(--acc); }
+  .body { padding: 6px 20px 20px; }
+
+  .glass { background: var(--glass); border: 1px solid var(--glass-rim); border-radius: 14px; backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+  .kbd { font: 500 11px -apple-system, system-ui, sans-serif; color: var(--ink); border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.06); border-radius: 5px; padding: 1px 6px; }
+  .hint { font-size: 12px; color: var(--soft); display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .hint span { display: inline-flex; gap: 6px; align-items: center; }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); font-weight: 600; }
+  .big { font-size: 34px; font-weight: 650; letter-spacing: -.01em; line-height: 1.1; }
+  .mid { font-size: 17px; font-weight: 600; }
+  .accent { color: var(--acc); }
+  .row { display: flex; gap: 12px; align-items: center; }
+  .col { display: flex; flex-direction: column; gap: 10px; }
+  .spread { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; background: var(--acc); color: #0B0C0E; }
+  .btn.ghost { background: var(--glass); color: var(--ink); border: 1px solid var(--glass-rim); }
+
+  /* avatars */
+  .av { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 11.5px; font-weight: 650; color: #0B0C0E; flex: none; position: relative; }
+  .av.sm { width: 22px; height: 22px; font-size: 9.5px; }
+  .av.lg { width: 44px; height: 44px; font-size: 15px; }
+  .av.dim { opacity: .35; }
+  .av.on { box-shadow: 0 0 0 2px #000, 0 0 0 4px var(--acc); }
+  .players { display: flex; gap: 8px; }
+  .c1 { background: #F4A3A3; } .c2 { background: #A3D8F4; } .c3 { background: #C9F4A3; } .c4 { background: #F4E1A3; } .c5 { background: #D4B8F4; } .c6 { background: #F4BFE0; } .c7 { background: #A3F4DC; } .c8 { background: #F4C9A3; }
+
+  /* timer ring */
+  .ring { --p: 60; width: 78px; height: 78px; border-radius: 50%; background: conic-gradient(var(--acc) calc(var(--p) * 1%), rgba(255,255,255,.08) 0); display: grid; place-items: center; flex: none; }
+  .ring > div { width: 66px; height: 66px; border-radius: 50%; background: #000; display: grid; place-items: center; font-size: 17px; font-weight: 650; }
+
+  .meter { height: 14px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; position: relative; }
+  .meter > div { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, color-mix(in srgb, var(--acc) 60%, #000), var(--acc)); }
+
+  .note { margin-top: 8px; font-size: 12px; color: var(--faint); }
+  .secret { display: inline-flex; gap: 6px; align-items: center; font-size: 11.5px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--bad) 18%, transparent); color: #FFB3B3; border: 1px dashed color-mix(in srgb, var(--bad) 60%, transparent); }
+
+  /* specific bits */
+  .tile { border-radius: 12px; padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px; color: var(--soft); border: 1px solid var(--line); background: rgba(255,255,255,.03); position: relative; }
+  .tile.sel { border-color: var(--acc); background: color-mix(in srgb, var(--acc) 10%, transparent); color: var(--ink); }
+  .tile .votes { position: absolute; top: 6px; right: 8px; font-size: 11px; color: var(--acc); font-weight: 700; }
+  .grid6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+
+  .msg { border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.4; }
+  .msg.in { background: rgba(255,255,255,.05); border: 1px solid var(--line); color: var(--soft); }
+  .msg.out { background: color-mix(in srgb, var(--acc) 8%, transparent); border: 1px solid color-mix(in srgb, var(--acc) 50%, transparent); }
+  .caret { display: inline-block; width: 1.5px; height: 16px; background: var(--acc); vertical-align: -3px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  del.d { color: #FF8A8A; text-decoration: line-through; }
+  ins.d { color: var(--acc); text-decoration: none; border-bottom: 1px dotted var(--acc); }
+
+  .chain { display: flex; align-items: stretch; gap: 0; }
+  .link { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; padding: 0 2px; }
+  .link::after { content: ""; position: absolute; top: 15px; left: calc(50% + 17px); right: calc(-50% + 17px); height: 2px; background: rgba(255,255,255,.18); }
+  .link:last-child::after { display: none; }
+  .link.break::after { background: repeating-linear-gradient(90deg, var(--bad) 0 5px, transparent 5px 9px); }
+  .link .snip { font-size: 10.5px; line-height: 1.3; color: var(--soft); text-align: center; background: rgba(255,255,255,.04); border-radius: 8px; padding: 5px 6px; min-height: 52px; width: 100%; }
+  .link.voted .snip { outline: 1px solid var(--acc); }
+
+  svg.arena { display: block; width: 100%; border-radius: 12px; background: radial-gradient(100% 120% at 50% 0%, #0F1A14, #050806); border: 1px solid rgba(255,255,255,.06); }
+
+  .stmt { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; border: 1px solid transparent; }
+  .stmt + .stmt { margin-top: 4px; }
+  .stmt.sel { border-color: var(--acc); background: color-mix(in srgb, var(--acc) 9%, transparent); }
+  .stmt .q { font-size: 13.5px; }
+  .stmt .q em { color: var(--faint); font-style: normal; font-size: 12px; display: block; }
+  .sq { width: 18px; height: 18px; border-radius: 4px; display: inline-block; }
+
+  .puzzle { display: grid; grid-template-columns: repeat(5, 34px); gap: 6px; }
+  .puzzle span { height: 34px; border-radius: 8px; background: rgba(255,255,255,.06); display: grid; place-items: center; font-size: 15px; font-weight: 700; color: var(--soft); }
+  .puzzle span.hit { background: color-mix(in srgb, var(--acc) 30%, transparent); color: var(--ink); }
+  .puzzle span.cur { box-shadow: 0 0 0 2px var(--acc); color: var(--ink); }
+
+  .compare { margin-top: 56px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--faint); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+  td:first-child { font-weight: 600; }
+  footer { max-width: 1320px; margin: 0 auto; padding: 32px 24px 64px; color: var(--faint); font-size: 12.5px; }
+
+  /* round 2 bits */
+  .group-title { max-width: 1320px; margin: 0 auto; padding: 72px 24px 0; }
+  .group-title h2 { margin: 0 0 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); font-weight: 600; }
+  .group-title p { margin: 0; color: var(--soft); }
+  .code { font: 12px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 10px; padding: 8px 0; overflow: hidden; }
+  .code div { padding: 0 12px; white-space: pre; }
+  .code .add { background: rgba(80,200,120,.11); color: #B6F2C8; }
+  .code .rem { background: rgba(255,90,90,.11); color: #FFB3B3; }
+  .code .ln { color: var(--faint); display: inline-block; width: 16px; }
+  .code.sm { font-size: 11px; padding: 6px 0; }
+  .code.sm div { padding: 0 8px; }
+  .chat { display: flex; flex-direction: column; gap: 8px; }
+  .bubble { max-width: 78%; padding: 7px 11px; border-radius: 12px; font-size: 13px; background: rgba(255,255,255,.06); }
+  .bubble .who { font-size: 11px; color: var(--faint); margin-bottom: 1px; font-weight: 600; }
+  .bubble.me { align-self: flex-end; background: color-mix(in srgb, var(--acc) 20%, transparent); }
+  .rows { display: flex; flex-direction: column; gap: 4px; }
+  .rows > div { display: grid; grid-template-columns: 26px 70px 1fr 70px 110px 46px; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 9px; background: rgba(255,255,255,.03); font-size: 13px; }
+  .rows > div.head { background: none; font-size: 11px; color: var(--faint); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+  .feed { font-size: 12.5px; color: var(--soft); display: flex; flex-direction: column; gap: 4px; }
+  .feed span { color: var(--faint); font-variant-numeric: tabular-nums; margin-right: 8px; }
+  .bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+  .bar > i { display: block; height: 100%; border-radius: 999px; background: var(--acc); }
+  .bignum { font-size: 44px; font-weight: 650; line-height: 1; font-variant-numeric: tabular-nums; }
+  svg.pad { display: block; border-radius: 12px; background: #0B0A09; border: 1px solid rgba(255,255,255,.07); }
+
+  @media (max-width: 720px) {
+    .vhead { grid-template-columns: 1fr; }
+    .states { grid-template-columns: 1fr; }
+    header.top, section.variant, nav.jump, footer { padding-left: 16px; padding-right: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>Notch deception games: mockups</h1>
+  <p>Six ways to take what makes Among Us work (hidden roles, faking normal behaviour, partial views, a group vote) and fit it to the notch. Every island drops from a 185 × 32 pt notch. Islands are larger than Notch Dino's because size is no longer a constraint. Each variant has its own colour so you can tell them apart; the art is placeholder.</p>
+</header>
+<nav class="jump">
+  <a href="#outsider"><i style="background:var(--a1)"></i>1 Outsider</a>
+  <a href="#whisper"><i style="background:var(--a2)"></i>2 Whisper</a>
+  <a href="#blend"><i style="background:var(--a3)"></i>3 Blend</a>
+  <a href="#fuse"><i style="background:var(--a4)"></i>4 Fuse</a>
+  <a href="#liar"><i style="background:var(--a5)"></i>5 Daily Liar</a>
+  <a href="#alibi"><i style="background:var(--a6)"></i>6 Alibi</a>
+  <a href="#codeword"><i style="background:var(--a7)"></i>7 Codeword</a>
+  <a href="#target"><i style="background:var(--a8)"></i>8 Target</a>
+  <a href="#commit"><i style="background:var(--a9)"></i>9 Sneaky Commit</a>
+  <a href="#question"><i style="background:var(--a10)"></i>10 Different Question</a>
+  <a href="#sketch"><i style="background:var(--a11)"></i>11 Fake Sketch</a>
+  <a href="#beat"><i style="background:var(--a12)"></i>12 Off Beat</a>
+  <a href="#bot"><i style="background:var(--a13)"></i>13 Spot the Bot</a>
+  <a href="#sleeper"><i style="background:var(--a14)"></i>14 Sleeper</a>
+  <a href="#compare">Compare</a>
+</nav>
+
+<!-- =============================== 1 OUTSIDER =============================== -->
+<section class="variant" id="outsider" style="--acc: var(--a1)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">01</span> Outsider</h2>
+      <p class="pitch">In-room party game, 3–10 people, about 5 minutes. Each notch deals a private card: everyone gets the same secret place, except one outsider, who gets nothing. People take turns asking each other questions out loud. The outsider bluffs and tries to work out the place. The notch only deals cards, keeps time and counts votes. People in the room do the talking.</p>
+      <div class="chips"><span class="chip">private card</span><span class="chip">talking out loud</span><span class="chip">permission to lie</span><span class="chip">low build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Is "glance, then Esc" enough to keep a card private from the person sitting next to you?</li><li>Should the round screen show question counts, or is that too much pressure?</li><li>Does the outsider need a clue (category only), or is nothing more fun?</li></ul></div>
+  </div>
+  <div class="states">
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:330px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span><span>View</span></div><div class="r tab"><span>Sun 8 Nov</span><span>14:02</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i><i style="top:62px;width:62%"></i><i style="top:80px;width:51%"></i></div>
+        <div class="island" style="width:500px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Outsider</b> · round 2</span><span class="cam"></span><span class="tab">6 players</span></div>
+          <div class="body">
+            <div class="glass" style="padding:18px 20px; text-align:center">
+              <div class="label">The place is</div>
+              <div class="big accent" style="margin:6px 0 4px">Night market</div>
+              <div style="color:var(--soft)">You're the <b style="color:var(--ink)">fish seller</b></div>
+            </div>
+            <div class="spread" style="margin-top:14px">
+              <div class="players"><div class="av sm c1">MA</div><div class="av sm c2">SA</div><div class="av sm c3 on">ME</div><div class="av sm c4">JU</div><div class="av sm c5">PR</div><div class="av sm c6">OM</div></div>
+              <div class="hint"><span><span class="kbd">Esc</span> hide card</span><span><span class="kbd">Space</span> ready</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Card: insider</h3><p>Opens by itself when the host deals. Large text you can read at a glance, then Esc folds it. "Ready" turns your avatar green for the others.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:330px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span><span>View</span></div><div class="r tab"><span>Sun 8 Nov</span><span>14:02</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i><i style="top:62px;width:62%"></i></div>
+        <div class="island" style="width:500px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Outsider</b> · round 2</span><span class="cam"></span><span class="tab">6 players</span></div>
+          <div class="body">
+            <div class="glass" style="padding:18px 20px; text-align:center">
+              <div class="label">The place is</div>
+              <div class="big" style="margin:6px 0 4px; color:var(--bad)">???</div>
+              <div style="color:var(--soft)">You're the <b style="color:var(--ink)">outsider</b>. Everyone else knows the place.<br>Listen, blend in, and name it before you're voted out.</div>
+            </div>
+            <div class="spread" style="margin-top:14px">
+              <div class="players"><div class="av sm c1">MA</div><div class="av sm c2">SA</div><div class="av sm c3 on">ME</div><div class="av sm c4">JU</div><div class="av sm c5">PR</div><div class="av sm c6">OM</div></div>
+              <div class="hint"><span><span class="kbd">G</span> guess the place</span><span><span class="kbd">Esc</span> hide</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Card: outsider</h3><p>Same layout and size as the insider card, so anyone glancing over your shoulder sees the same shape. Only the words differ.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:330px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span><span>View</span></div><div class="r tab"><span>Sun 8 Nov</span><span>14:04</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i></div>
+        <div class="island" style="width:540px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Outsider</b> · questions</span><span class="cam"></span><span class="tab accent">4:12</span></div>
+          <div class="body">
+            <div class="row" style="gap:18px">
+              <div class="ring" style="--p:70"><div class="tab">4:12</div></div>
+              <div class="col" style="flex:1; gap:6px">
+                <div class="label">Asking now</div>
+                <div class="row" style="gap:10px"><div class="av c1 on">MA</div><span style="color:var(--faint)">asks</span><div class="av c4">JU</div><span class="mid">Maya → Jun</span></div>
+                <div style="color:var(--soft); font-size:13px">Jun answers, then asks anyone except Maya.</div>
+              </div>
+            </div>
+            <div class="grid6" style="margin-top:14px">
+              <div class="tile"><div class="av sm c1">MA</div>asked 2</div>
+              <div class="tile"><div class="av sm c2">SA</div>asked 1</div>
+              <div class="tile"><div class="av sm c3">ME</div>asked 1</div>
+              <div class="tile sel"><div class="av sm c4">JU</div>answering</div>
+              <div class="tile"><div class="av sm c5">PR</div>asked 0</div>
+              <div class="tile"><div class="av sm c6">OM</div>asked 1</div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span><span class="kbd">Space</span> I've answered</span><span><span class="kbd">C</span> peek at card</span></div><div class="hint"><span><span class="kbd">V</span> call a vote</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Questions round</h3><p>Every island shows the same screen. Players can keep it open on the table or fold it; the notch glows when it's your turn. Anyone can call a vote early.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:330px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span><span>View</span></div><div class="r tab"><span>Sun 8 Nov</span><span>14:07</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i></div>
+        <div class="island" style="width:540px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Outsider</b> · reveal</span><span class="cam"></span><span class="tab">5 of 6 voted Jun</span></div>
+          <div class="body">
+            <div class="row" style="gap:16px; align-items:flex-start">
+              <div class="av lg c4 on">JU</div>
+              <div style="flex:1">
+                <div class="mid">Jun was the outsider</div>
+                <div style="color:var(--soft); margin-top:2px">Jun guessed <b style="color:var(--ink)">"Food court"</b>. The place was <b class="accent">Night market</b>. Close, but no.</div>
+              </div>
+              <div class="glass" style="padding:8px 12px; text-align:center"><div class="label">Insiders win</div><div class="mid accent tab">+2 each</div></div>
+            </div>
+            <div class="glass" style="margin-top:14px; padding:10px 14px">
+              <div class="label" style="margin-bottom:6px">Best bluff of the round</div>
+              <div style="font-size:13.5px">Jun: <span style="color:var(--soft)">"I'd come here hungry, honestly."</span> <span style="color:var(--faint)">(fooled 1 vote)</span></div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="players"><div class="av sm c1">MA</div><div class="av sm c2">SA</div><div class="av sm c3">ME</div><div class="av sm c5">PR</div><div class="av sm c6">OM</div></div><div class="hint"><span><span class="kbd">Space</span> next round</span><span><span class="kbd">Esc</span> leave</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Vote and reveal</h3><p>Voting uses arrows and Space on the same six tiles (not shown). The reveal is shared on every screen at once so the room reacts together. The "best bluff" line is typed in by the host or skipped.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 2 WHISPER =============================== -->
+<section class="variant" id="whisper" style="--acc: var(--a2)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">02</span> Whisper</h2>
+      <p class="pitch">Office game that runs all day, 4+ people on the same network. A message travels notch to notch through a hidden chain. Each person sees only what they received, rewords it slightly and passes it on in under 30 seconds. One secret corrupter twists it on purpose. At 4pm the whole chain is revealed and everyone votes on where it broke.</p>
+      <div class="chips"><span class="chip">partial view</span><span class="chip">long quiet, sudden spike</span><span class="chip">10 s per turn</span><span class="chip">opt-in only</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Is a glow on the folded notch quiet enough, or should whispers wait until you open it yourself?</li><li>Should the rule be "must change at least one word" so honest drift exists to hide the corrupter?</li><li>Is 4pm a good reveal time, or should the reveal happen when the chain finishes?</li></ul></div>
+  </div>
+  <div class="states">
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:200px">
+        <div class="menubar"><div class="l"><span>Xcode</span><span>File</span><span>Edit</span><span>Product</span></div><div class="r tab"><span>Sun 8 Nov</span><span>11:20</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i><i style="top:62px;width:62%"></i><i style="top:80px;width:51%"></i></div>
+        <div class="island" style="width:300px; border-radius:0 0 20px 20px">
+          <div class="glow" style="border-radius:0 0 21px 21px; opacity:.9"></div>
+          <div class="band" style="padding:0 16px"><span class="accent" style="font-size:16px">●</span><span class="cam"></span><span class="tab accent">0:28</span></div>
+        </div>
+      </div></div>
+      <figcaption><h3>Waiting (folded)</h3><p>The notch grows just a few points and shows a blue dot and a countdown. No sound, no popup. Ignore it and the whisper skips you (counts as "passed unchanged").</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:330px">
+        <div class="menubar"><div class="l"><span>Xcode</span><span>File</span><span>Edit</span><span>Product</span></div><div class="r tab"><span>Sun 8 Nov</span><span>11:20</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i><i style="top:62px;width:62%"></i></div>
+        <div class="island" style="width:520px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Whisper</b> · link 4 of 8</span><span class="cam"></span><span class="tab accent">0:21</span></div>
+          <div class="body">
+            <div class="label" style="margin-bottom:6px">You heard</div>
+            <div class="msg in">The coffee machine on floor 3 is fixed, but only the left side works, and it still won't do oat milk.</div>
+            <div class="label" style="margin:12px 0 6px">Pass it on (change at least one word)</div>
+            <div class="msg out">The coffee machine on floor 3 is fixed, but only the left side works, and it still <del class="d">won't do</del> <ins class="d">can't make</ins> oat milk.<span class="caret"></span></div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Next person: hidden</span></div><div class="hint"><span><span class="kbd">⏎</span> pass on</span><span><span class="kbd">Esc</span> skip</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Relay (honest)</h3><p>The text box starts filled with what you heard, so passing it on takes seconds. The small difference is shown as you type. You never learn who sent it or who gets it next.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:330px">
+        <div class="menubar"><div class="l"><span>Slack</span><span>File</span><span>Edit</span><span>View</span></div><div class="r tab"><span>Sun 8 Nov</span><span>12:41</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i></div>
+        <div class="island" style="width:520px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Whisper</b> · link 6 of 8</span><span class="cam"></span><span class="tab accent">0:24</span></div>
+          <div class="body">
+            <div class="spread" style="margin-bottom:6px"><div class="label">You heard</div><span class="secret">● You're today's corrupter</span></div>
+            <div class="msg in">The coffee machine on floor 3 is fixed, but only the left side works, and it can't make oat milk.</div>
+            <div class="label" style="margin:12px 0 6px">Twist it, but not so much it's obvious</div>
+            <div class="msg out">The coffee machine on floor <del class="d">3</del> <ins class="d">2</ins> is fixed, but only the left side works, and it can't make oat milk.<span class="caret"></span></div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>One twist today. Make it count.</span></div><div class="hint"><span><span class="kbd">⏎</span> pass on</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Relay (corrupter)</h3><p>Same screen with one red tag. The tag only shows for you, and only on this screen. Everything else looks identical, in case someone glances over.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:360px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span><span>View</span></div><div class="r tab"><span>Sun 8 Nov</span><span>16:00</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i></div>
+        <div class="island" style="width:590px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Whisper</b> · 4pm reveal</span><span class="cam"></span><span class="tab">vote 6 of 8</span></div>
+          <div class="body">
+            <div class="spread" style="font-size:12.5px; margin-bottom:10px"><span style="color:var(--soft)">Start: <b style="color:var(--ink)">"…floor 3… left side… won't do oat milk."</b></span></div>
+            <div class="chain">
+              <div class="link"><div class="av c1">MA</div><div class="snip">start</div></div>
+              <div class="link"><div class="av c2">SA</div><div class="snip">"is fixed" → "got fixed"</div></div>
+              <div class="link"><div class="av c3">ME</div><div class="snip">"won't do" → "can't make"</div></div>
+              <div class="link break"><div class="av c4">JU</div><div class="snip">no change</div></div>
+              <div class="link voted"><div class="av c5">PR</div><div class="snip">floor <b style="color:#FF8A8A">3 → 2</b></div></div>
+              <div class="link"><div class="av c6">OM</div><div class="snip">"left" → "left-hand"</div></div>
+              <div class="link"><div class="av c7">KE</div><div class="snip">"oat" → "almond"</div></div>
+              <div class="link"><div class="av c8">DA</div><div class="snip">end</div></div>
+            </div>
+            <div class="spread" style="margin-top:12px; font-size:12.5px"><span style="color:var(--soft)">End: <b style="color:var(--ink)">"…floor 2… left-hand side… can't make almond milk."</b></span></div>
+            <div class="spread" style="margin-top:10px"><div class="hint"><span>Who's the corrupter? Two twists here: one honest, one not.</span></div><div class="hint"><span><span class="kbd">← →</span> pick</span><span><span class="kbd">Space</span> vote</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>4pm reveal</h3><p>Every change is shown at once. Real meaning changes (floor number, oat to almond) stand out, but honest players make them too, and that's where the doubt lives. Then everyone votes.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 3 BLEND =============================== -->
+<section class="variant" id="blend" style="--acc: var(--a3)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">03</span> Blend</h2>
+      <p class="pitch">2–6 players, about 2 minutes. An arena full of drifting dots, almost all moved by AI. Each hider secretly steers one dot and must touch three spots in order while moving like a bot. The seeker has three shots to find the humans. A reverse Turing test: the human has to pass as the machine.</p>
+      <div class="chips"><span class="chip">faking normal behaviour</span><span class="chip">watch vs work</span><span class="chip">LAN, 2+ players</span><span class="chip">AI movement is the hard part</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Are 3 shots for 1–2 hiders about right, or too generous?</li><li>Should bots also visit task spots now and then, so touching one isn't proof?</li><li>Is the trail replay at the end the payoff, or does it need more?</li></ul></div>
+  </div>
+  <div class="states">
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:380px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>15:12</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Blend</b> · you're hiding</span><span class="cam"></span><span class="tab accent">1:34</span></div>
+          <div class="body">
+            <svg class="arena" id="arena-hide" viewBox="0 0 540 250" aria-label="Arena with 30 drifting dots; your dot is circled; three numbered task spots"></svg>
+            <div class="spread" style="margin-top:10px">
+              <div class="row" style="gap:8px; font-size:12.5px; color:var(--soft)"><span>Task</span><span class="sq" style="background:var(--acc)"></span><span class="sq" style="background:rgba(255,255,255,.12)"></span><span class="sq" style="background:rgba(255,255,255,.12)"></span><span class="tab">1 of 3</span></div>
+              <div class="hint"><span><span class="kbd">← ↑ → ↓</span> drift</span><span>Seeker has 3 shots</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Hider view</h3><p>Only you see the ring on your dot and the numbered spots. Moving straight to a spot looks human; bots wander. The skill is drifting towards spot 2 without looking like you want it.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:380px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>15:12</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Blend</b> · you're seeking</span><span class="cam"></span><span class="tab accent">1:34</span></div>
+          <div class="body">
+            <svg class="arena" id="arena-seek" viewBox="0 0 540 250" aria-label="Same arena from the seeker's view, with a crosshair over one dot"></svg>
+            <div class="spread" style="margin-top:10px">
+              <div class="row" style="gap:8px; font-size:12.5px; color:var(--soft)"><span>Shots</span><span class="accent" style="letter-spacing:3px">●●<span style="color:rgba(255,255,255,.2)">●</span></span><span class="tab">Found 0 of 2</span></div>
+              <div class="hint"><span>Click to tag</span><span>A miss is shown to everyone</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Seeker view</h3><p>No task spots and no rings, just dots. A missed shot marks a bot grey. Hiders win if they finish their task or the timer runs out.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:380px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>15:14</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Blend</b> · replay</span><span class="cam"></span><span class="tab">Hiders win</span></div>
+          <div class="body">
+            <svg class="arena" id="arena-replay" viewBox="0 0 540 250" aria-label="Replay with grey bot trails and two coloured human trails"></svg>
+            <div class="spread" style="margin-top:10px">
+              <div class="row" style="gap:14px; font-size:12.5px; color:var(--soft)"><span class="row" style="gap:6px"><div class="av sm c3">ME</div> task done 3/3</span><span class="row" style="gap:6px"><div class="av sm c5">PR</div> tagged at 0:41</span></div>
+              <div class="hint"><span><span class="kbd">Space</span> swap roles</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Replay</h3><p>Bot paths in grey, human paths in colour. The punchline is seeing how obvious (or not) a human path looks afterwards.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 4 FUSE =============================== -->
+<section class="variant" id="fuse" style="--acc: var(--a4)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">04</span> Fuse</h2>
+      <p class="pitch">3–8 players on a LAN, about 3 minutes. Everyone keeps a shared fuse burning by solving quick puzzles. Each solve adds fuel. You can only see what your two neighbours add. One saboteur's solves secretly take fuel away. The fuse reaching the bomb, or a correct vote, ends the round.</p>
+      <div class="chips"><span class="chip">watch vs work</span><span class="chip">partial view</span><span class="chip">teamwork with a traitor</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Is "see only neighbours" clear enough, or does it need a seating diagram?</li><li>Should the saboteur get an obvious tell (slower solves) or none at all?</li><li>Does the puzzle need to be harder so watching costs more?</li></ul></div>
+  </div>
+  <div class="states">
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:360px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>13:30</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Fuse</b> · 6 players</span><span class="cam"></span><span class="tab accent">2:10</span></div>
+          <div class="body">
+            <div class="spread" style="margin-bottom:6px"><span class="label">Fuel</span><span class="tab" style="color:var(--soft); font-size:12.5px">62% · falling 1.2%/s</span></div>
+            <div class="meter"><div style="width:62%"></div></div>
+            <div class="row" style="margin-top:16px; gap:22px; align-items:flex-start">
+              <div class="col" style="gap:8px">
+                <div class="label">Your puzzle: type the hidden word</div>
+                <div class="puzzle"><span class="hit">E</span><span class="hit">M</span><span class="cur">_</span><span>_</span><span>_</span></div>
+                <div style="font-size:12px; color:var(--faint)">Hint: glowing coal</div>
+              </div>
+              <div class="col" style="flex:1; gap:6px">
+                <div class="label">You can see</div>
+                <div class="spread glass" style="padding:7px 10px"><span class="row" style="gap:8px"><div class="av sm c5">PR</div>Priya (left)</span><span class="tab accent">+4 fuel</span></div>
+                <div class="spread glass" style="padding:7px 10px"><span class="row" style="gap:8px"><div class="av sm c6">OM</div>Omar (right)</span><span class="tab accent">+2 fuel</span></div>
+                <div class="spread" style="padding:2px 10px; color:var(--faint); font-size:12.5px"><span>3 others</span><span>hidden</span></div>
+              </div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Type to solve</span><span><span class="kbd">V</span> call a vote</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Player view</h3><p>Fuel falls all the time, so stopping to watch costs the team. You can only check your neighbours, so suspicion has to be passed around out loud.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:360px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>13:30</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Fuse</b> · 6 players</span><span class="cam"></span><span class="tab accent">2:10</span></div>
+          <div class="body">
+            <div class="spread" style="margin-bottom:6px"><span class="label">Fuel</span><span class="secret">● You're the saboteur</span></div>
+            <div class="meter"><div style="width:62%"></div></div>
+            <div class="row" style="margin-top:16px; gap:22px; align-items:flex-start">
+              <div class="col" style="gap:8px">
+                <div class="label">Your puzzle: type the hidden word</div>
+                <div class="puzzle"><span class="hit">S</span><span class="hit">P</span><span class="hit">A</span><span class="cur">_</span><span>_</span></div>
+                <div style="font-size:12px; color:#FFB3B3">This solve drains 3 fuel. Sam and Jun will see "+3".</div>
+              </div>
+              <div class="col" style="flex:1; gap:6px">
+                <div class="label">You can see</div>
+                <div class="spread glass" style="padding:7px 10px"><span class="row" style="gap:8px"><div class="av sm c2">SA</div>Sam (left)</span><span class="tab accent">+5 fuel</span></div>
+                <div class="spread glass" style="padding:7px 10px"><span class="row" style="gap:8px"><div class="av sm c4">JU</div>Jun (right)</span><span class="tab accent">+3 fuel</span></div>
+                <div class="spread" style="padding:2px 10px; color:var(--faint); font-size:12.5px"><span>3 others</span><span>hidden</span></div>
+              </div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>The meter dropping faster than expected is your tell.</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Saboteur view</h3><p>Neighbours see a normal "+3". The only evidence is the total meter falling faster than the visible solves explain, which someone has to notice and say out loud.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:300px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>13:32</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Fuse</b> · vote called by Sam</span><span class="cam"></span><span class="tab accent">0:20</span></div>
+          <div class="body">
+            <div style="color:var(--soft); margin-bottom:10px; font-size:13px">Fuel paused at <b class="tab" style="color:var(--ink)">41%</b>. A wrong vote costs 15%.</div>
+            <div class="grid6">
+              <div class="tile"><div class="av sm c1">MA</div>+21</div>
+              <div class="tile"><div class="av sm c2">SA</div>+18</div>
+              <div class="tile sel"><span class="votes">3</span><div class="av sm c3">ME</div>+16</div>
+              <div class="tile"><span class="votes">1</span><div class="av sm c4">JU</div>+14</div>
+              <div class="tile"><div class="av sm c5">PR</div>+19</div>
+              <div class="tile"><span class="votes">1</span><div class="av sm c6">OM</div>+12</div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Claimed fuel totals add up to +100. Meter says +58.</span></div><div class="hint"><span><span class="kbd">Space</span> vote</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Vote</h3><p>At vote time, everyone's claimed fuel is shown, plus the real total. The gap proves a saboteur exists, but not who.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 5 DAILY LIAR =============================== -->
+<section class="variant" id="liar" style="--acc: var(--a5)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">05</span> Daily Liar</h2>
+      <p class="pitch">Solo, about 2 minutes, one puzzle a day. Five people each give a statement about the same small event. Exactly one is lying. Find the contradiction. Results are shared as a small coloured grid, like Wordle.</p>
+      <div class="chips"><span class="chip">deduction</span><span class="chip">daily habit</span><span class="chip">no network</span><span class="chip">lowest build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Are five statements readable in the island at this size?</li><li>Should wrong guesses cost something (score), or just be counted?</li><li>Hand-written puzzles or generated? Generated needs a logic engine.</li></ul></div>
+  </div>
+  <div class="states">
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:400px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>09:05</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Daily Liar</b> · #212</span><span class="cam"></span><span class="tab">0:48</span></div>
+          <div class="body">
+            <div style="color:var(--soft); font-size:13px; margin-bottom:10px">Someone ate the last slice of cake in the office kitchen between 12 and 1. One of these is lying.</div>
+            <div class="stmt"><div class="av sm c1">AV</div><div class="q">"I was in the 12:30 standup the whole time."<em>Ava</em></div><span></span></div>
+            <div class="stmt"><div class="av sm c2">BO</div><div class="q">"Cal and I left the kitchen together at 12:15."<em>Bo</em></div><span></span></div>
+            <div class="stmt sel"><div class="av sm c3">CA</div><div class="q">"I never went to the kitchen today."<em>Cal</em></div><span class="kbd">Space</span></div>
+            <div class="stmt"><div class="av sm c4">DI</div><div class="q">"Ava left standup early, around 12:40."<em>Dina</em></div><span></span></div>
+            <div class="stmt"><div class="av sm c5">EZ</div><div class="q">"The cake was still there at 12:50."<em>Ezra</em></div><span></span></div>
+            <div class="spread" style="margin-top:10px"><div class="hint"><span><span class="kbd">↑ ↓</span> pick</span><span><span class="kbd">Space</span> accuse</span></div><div class="hint"><span>Guesses left: 3</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Puzzle</h3><p>Bo's statement contradicts Cal's, so one of them is the liar. The rest decides which. Taller island fits all five statements without scrolling.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:400px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>09:07</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Daily Liar</b> · #212</span><span class="cam"></span><span class="tab accent">Solved</span></div>
+          <div class="body">
+            <div class="row" style="gap:16px; align-items:flex-start">
+              <div class="av lg c3 on">CA</div>
+              <div style="flex:1">
+                <div class="mid">Cal was lying</div>
+                <div style="color:var(--soft); margin-top:2px; font-size:13px">Bo saw Cal in the kitchen at 12:15. If Bo were lying instead, Ezra's 12:50 sighting and Dina's timing would leave nobody free to eat the cake.</div>
+              </div>
+            </div>
+            <div class="glass" style="margin-top:16px; padding:14px 16px">
+              <div class="spread">
+                <div>
+                  <div class="label" style="margin-bottom:8px">Share</div>
+                  <div style="font: 500 13px ui-monospace, SFMono-Regular, Menlo, monospace; line-height:1.6">Daily Liar #212 · 1:42<br>
+                    <span class="sq" style="background:rgba(255,255,255,.14)"></span> <span class="sq" style="background:var(--bad)"></span> <span class="sq" style="background:var(--acc)"></span></div>
+                </div>
+                <div class="col" style="gap:4px; text-align:right">
+                  <div class="label">Streak</div><div class="big tab accent" style="font-size:28px">9</div>
+                </div>
+              </div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span><span class="kbd">⌘C</span> copy result</span></div><div class="hint"><span>Next puzzle in 14:53:12</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Solved</h3><p>Explains the logic so even a lucky guess teaches something. The share line hides the answer: grey for unused, red for a wrong guess, purple for the right one.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 6 ALIBI =============================== -->
+<section class="variant" id="alibi" style="--acc: var(--a6)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">06</span> Alibi</h2>
+      <p class="pitch">Experimental office game across a whole day, 4+ people. Uses rough real-world presence: Bluetooth signal strength between Macs and whether a lid is open. The hidden "ghost" can only tag someone when their Macs are close and no other Mac is nearby. Your real location is your alibi.</p>
+      <div class="chips"><span class="chip">most like Among Us</span><span class="chip">privacy-heavy</span><span class="chip">very high build cost</span><span class="chip">experiment only</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Is even rough proximity too creepy for an office? It needs to be strictly opt-in, auto-off after the game, and shown clearly.</li><li>Laptops mostly stay on desks. Does the game still work if people rarely move?</li><li>Would rooms people mark themselves ("I'm in the kitchen") be enough instead of real signals?</li></ul></div>
+  </div>
+  <div class="states">
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:380px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>14:31</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Alibi</b> · day game</span><span class="cam"></span><span class="tab">7 alive</span></div>
+          <div class="body">
+            <svg class="arena" id="office" viewBox="0 0 540 220" aria-label="Rough office floor plan with nearby Macs as dots; you and Dana are alone in the kitchen" style="background:#0D0A0C"></svg>
+            <div class="spread" style="margin-top:10px">
+              <div class="row" style="gap:10px"><span class="secret">● You're the ghost</span><span style="font-size:12.5px; color:var(--soft)">Alone with <b style="color:var(--ink)">Dana</b> · nobody else near</span></div>
+              <div class="hint"><span><span class="kbd">T</span> tag Dana</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Ghost view</h3><p>Positions are rough zones, not exact spots. A tag is only offered when exactly two Macs are close together. Dana's Mac goes dark a few minutes later, not at once, so timing doesn't give it away.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:380px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sun 8 Nov</span><span>14:40</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Alibi</b> · Dana is out</span><span class="cam"></span><span class="tab accent">vote 1:30</span></div>
+          <div class="body">
+            <div style="color:var(--soft); font-size:13px; margin-bottom:10px">Dana was tagged between <b style="color:var(--ink)">14:25 and 14:35</b>. Here's who was near whom.</div>
+            <div class="col" style="gap:6px; font-size:13px">
+              <div class="spread glass" style="padding:8px 12px"><span class="row" style="gap:8px"><div class="av sm c1">MA</div><span>Maya</span></span><span style="color:var(--soft)">with Sam and Omar, meeting room</span></div>
+              <div class="spread glass" style="padding:8px 12px"><span class="row" style="gap:8px"><div class="av sm c4">JU</div><span>Jun</span></span><span style="color:var(--soft)">alone, desks · <b style="color:var(--ink)">no alibi</b></span></div>
+              <div class="spread glass" style="padding:8px 12px; border-color:color-mix(in srgb, var(--acc) 60%, transparent)"><span class="row" style="gap:8px"><div class="av sm c3">ME</div><span>You</span></span><span style="color:var(--soft)">near kitchen · <b style="color:var(--ink)">no alibi</b></span></div>
+              <div class="spread glass" style="padding:8px 12px"><span class="row" style="gap:8px"><div class="av sm c5">PR</div><span>Priya</span></span><span style="color:var(--soft)">lid closed (away)</span></div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Talk it out, then vote.</span></div><div class="hint"><span><span class="kbd">↑ ↓</span> pick</span><span><span class="kbd">Space</span> vote</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Meeting</h3><p>Opens on every Mac at once. Shows rough whereabouts as alibis, then a 90-second vote. Discussion happens out loud or in Slack.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="group-title"><h2>Round 2</h2><p>Eight more variants: games hidden inside your real workday, short in-room rounds, and games with AI in a role.</p></div>
+
+<!-- =============================== 7 CODEWORD =============================== -->
+<section class="variant" id="codeword" style="--acc: var(--a7)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">07</span> Codeword</h2>
+      <p class="pitch">Office game across a workday, 4+ people. Each morning the notch privately gives you an odd word or phrase. Slip it into real Slack messages or meetings without anyone noticing. Anyone can flag a suspected smuggle during the day. At 5pm: who smuggled what? Your real workday is the game board; the notch only deals, holds the secret and keeps score.</p>
+      <div class="chips"><span class="chip">faking normal behaviour</span><span class="chip">quiet day, 5pm spike</span><span class="chip">almost no screen time</span><span class="chip">low build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Self-reported uses ("I used it") rely on honesty. Good enough among friends?</li><li>Should flags be limited (3 a day) so people can't flag everything?</li><li>Should words get harder through the week (Monday "pineapple", Friday "as per my last email")?</li></ul></div>
+  </div>
+  <div class="states">
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:310px">
+        <div class="menubar"><div class="l"><span>Slack</span><span>File</span><span>Edit</span><span>View</span></div><div class="r tab"><span>Mon 9 Nov</span><span>09:12</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i><i style="top:62px;width:62%"></i></div>
+        <div class="island" style="width:500px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Codeword</b> · Monday</span><span class="cam"></span><span class="tab">7 playing</span></div>
+          <div class="body">
+            <div class="glass" style="padding:18px 20px; text-align:center">
+              <div class="label">Your word today</div>
+              <div class="big accent" style="margin:6px 0 6px">pineapple</div>
+              <div style="color:var(--soft); font-size:13px">Use it naturally in Slack or out loud before 5pm.<br>Every use nobody flags: +1. Get caught: −2.</div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Only you can see this</span></div><div class="hint"><span><span class="kbd">Esc</span> hide</span><span><span class="kbd">Space</span> got it</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Morning deal</h3><p>Opens once, the first time you unlock your Mac after 9am. After that it stays folded unless you open it.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:330px">
+        <div class="menubar"><div class="l"><span>Slack</span><span>File</span><span>Edit</span><span>View</span></div><div class="r tab"><span>Mon 9 Nov</span><span>13:48</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Codeword</b> · pineapple</span><span class="cam"></span><span class="tab">3:12 left</span></div>
+          <div class="body">
+            <div class="row" style="gap:16px; align-items:stretch">
+              <div class="glass" style="padding:12px 14px; width:150px; text-align:center">
+                <div class="label">Used</div>
+                <div class="bignum accent" style="margin:6px 0">2</div>
+                <div class="hint" style="justify-content:center"><span><span class="kbd">U</span> I just used it</span></div>
+              </div>
+              <div class="glass" style="padding:12px 14px; flex:1">
+                <div class="spread"><div class="label">Flag a smuggle</div><span style="font-size:12px; color:var(--faint)">2 of 3 flags left</span></div>
+                <div class="players" style="margin:10px 0"><div class="av sm c1">MA</div><div class="av sm c2 on">SA</div><div class="av sm c4">JU</div><div class="av sm c5">PR</div><div class="av sm c6">OM</div><div class="av sm c8">DA</div></div>
+                <div class="msg out" style="padding:7px 10px; font-size:13px">Sam smuggled: "circle back"<span class="caret"></span></div>
+              </div>
+            </div>
+            <div class="feed" style="margin-top:12px"><div><span>11:20</span>You flagged Maya: "synergy"</div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>During the day</h3><p>Two jobs only: log your own uses, and flag what sounded off. Flags are secret until 5pm, so nobody knows they've been noticed.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:370px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Mon 9 Nov</span><span>17:00</span></div></div>
+        <div class="island" style="width:600px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Codeword</b> · 5pm reveal</span><span class="cam"></span><span class="tab">Monday</span></div>
+          <div class="body">
+            <div class="rows">
+              <div class="head"><span></span><span>Player</span><span>Word</span><span>Used</span><span>Caught by</span><span>Pts</span></div>
+              <div><div class="av sm c2">SA</div><span>Sam</span><span>"circle back"</span><span class="tab">3×</span><span style="color:#FFB3B3">You</span><span class="tab">+0</span></div>
+              <div><div class="av sm c3">ME</div><span>You</span><span>"pineapple"</span><span class="tab">2×</span><span style="color:var(--faint)">nobody</span><span class="tab accent">+5</span></div>
+              <div><div class="av sm c1">MA</div><span>Maya</span><span>"lighthouse"</span><span class="tab">1×</span><span style="color:var(--faint)">nobody</span><span class="tab accent">+1</span></div>
+              <div><div class="av sm c5">PR</div><span>Priya</span><span>"spreadsheet wizard"</span><span class="tab">4×</span><span style="color:var(--faint)">nobody</span><span class="tab accent">+4</span></div>
+              <div><div class="av sm c6">OM</div><span>Omar</span><span>"gravy"</span><span class="tab">0×</span><span style="color:var(--faint)">–</span><span class="tab">+0</span></div>
+            </div>
+            <div class="spread" style="margin-top:10px"><div class="hint"><span>You: +2 for 2 clean uses, +3 for catching Sam. Your "synergy" flag on Maya missed.</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>5pm reveal</h3><p>Everyone sees every word at once. Best part is scrolling back through Slack to find where "pineapple" went unnoticed.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 8 TARGET =============================== -->
+<section class="variant" id="target" style="--acc: var(--a8)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">08</span> Target</h2>
+      <p class="pitch">Office game over several days, 5+ people. The notch gives you a secret target (a coworker) and a task, like getting them to say a word or hand you an object. Succeed, the target confirms in their notch, they're out, and you inherit their target. Last one in wins.</p>
+      <div class="chips"><span class="chip">hidden roles</span><span class="chip">no one to trust</span><span class="chip">runs for days</span><span class="chip">low build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>The target confirms their own exit. Is that fair, or should a dispute go to a vote?</li><li>Are task types (say a word, hand an object, sit in a chair) varied enough?</li><li>Is a public feed of exits fun or too much pressure?</li></ul></div>
+  </div>
+  <div class="states">
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:320px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Mon 9 Nov</span><span>09:30</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i></div>
+        <div class="island" style="width:520px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Target</b> · week 46</span><span class="cam"></span><span class="tab">9 in</span></div>
+          <div class="body">
+            <div class="row" style="gap:16px">
+              <div class="av lg c8 on">DA</div>
+              <div style="flex:1"><div class="label">Your target</div><div class="mid">Dana</div></div>
+              <div style="text-align:right"><div class="label">Until</div><div class="tab" style="font-weight:600">Fri 17:00</div></div>
+            </div>
+            <div class="glass" style="margin-top:14px; padding:14px 16px">
+              <div class="label">Task</div>
+              <div style="font-size:16px; font-weight:600; margin-top:4px">Get Dana to say the word <span class="accent">"weekend"</span>.</div>
+              <div style="color:var(--soft); font-size:12.5px; margin-top:4px">Somebody is hunting you too. You don't know who.</div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Dana confirms on her notch</span></div><div class="hint"><span><span class="kbd">Esc</span> hide</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Assignment</h3><p>Shown once, then stays folded. The notch never says who's hunting you.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:270px">
+        <div class="menubar"><div class="l"><span>Mail</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Wed 11 Nov</span><span>12:41</span></div></div>
+        <div class="win"><i style="top:44px;width:40%"></i></div>
+        <div class="island" style="width:500px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Target</b></span><span class="cam"></span><span class="tab">just now</span></div>
+          <div class="body">
+            <div class="row" style="gap:14px">
+              <div class="av lg c4">JU</div>
+              <div style="flex:1"><div class="mid">Jun says they got you.</div><div style="color:var(--soft); font-size:13px">Task: get you to say "weekend". Did that just happen?</div></div>
+            </div>
+            <div class="row" style="margin-top:14px; gap:8px; justify-content:flex-end"><span class="btn ghost">Dispute <span class="kbd">D</span></span><span class="btn">Yes, fair <span class="kbd" style="color:#0B0C0E; border-color:rgba(0,0,0,.3)">⏎</span></span></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Target's confirmation</h3><p>The only moment the game interrupts. Saying yes knocks you out and passes your target to Jun. A dispute goes to a quick vote of the remaining players.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:400px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Wed 11 Nov</span><span>14:05</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Target</b> · week 46</span><span class="cam"></span><span class="tab accent">5 of 9 in</span></div>
+          <div class="body">
+            <div class="players" style="margin-bottom:12px"><div class="av sm c1">MA</div><div class="av sm c2 dim">SA</div><div class="av sm c3 on">ME</div><div class="av sm c4">JU</div><div class="av sm c5 dim">PR</div><div class="av sm c6">OM</div><div class="av sm c7 dim">KE</div><div class="av sm c8 dim">DA</div><div class="av sm c2" style="background:#B8F4A3">LI</div></div>
+            <div class="glass" style="padding:12px 14px">
+              <div class="label">Your new target (from Dana)</div>
+              <div style="font-size:15px; font-weight:600; margin-top:4px">Omar: get him to hand you a pen.</div>
+            </div>
+            <div class="feed" style="margin-top:12px">
+              <div><span>Wed 11:58</span>You took out Dana</div>
+              <div><span>Tue 16:20</span>Kei was taken out</div>
+              <div><span>Tue 10:02</span>Priya was taken out</div>
+              <div><span>Mon 15:44</span>Sam was taken out</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Status and new target</h3><p>The feed shows who's out but never who did it, so suspicion keeps spreading. You take over your victim's target, so each success points you at someone new.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 9 SNEAKY COMMIT =============================== -->
+<section class="variant" id="commit" style="--acc: var(--a9)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">09</span> Sneaky Commit</h2>
+      <p class="pitch">For developers, 3–6 people, about 5 minutes. Everyone gets the same short function and makes one small "refactor" each. One saboteur also hides a real bug inside theirs. Everyone reviews all the diffs and votes on which commit broke it. Tests run at the reveal and prove who it was.</p>
+      <div class="chips"><span class="chip">partial view</span><span class="chip">group vote</span><span class="chip">made for developers</span><span class="chip">medium build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Should honest players be allowed to make risky-looking but correct changes, to hide the saboteur?</li><li>Language-agnostic pseudocode, or let the host pick JS/Swift/Python?</li><li>Is 60 seconds of review per round enough?</li></ul></div>
+  </div>
+  <div class="states">
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:360px">
+        <div class="menubar"><div class="l"><span>Xcode</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>16:30</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Sneaky Commit</b> · your turn</span><span class="cam"></span><span class="tab accent">0:42</span></div>
+          <div class="body">
+            <div class="spread" style="margin-bottom:8px"><span class="label">Make one small refactor</span><span class="secret">● You're the saboteur: hide a bug</span></div>
+            <div class="code">
+<div><span class="ln">1</span> function total(items) {</div>
+<div class="rem"><span class="ln">2</span>-  let sum = 0;</div>
+<div class="rem"><span class="ln">3</span>-  for (const i of items) sum += i.price * i.qty;</div>
+<div class="rem"><span class="ln">4</span>-  return sum;</div>
+<div class="add"><span class="ln">2</span>+  return items.reduce((s, i) => s + i.price * i.qty, 1);</div>
+<div><span class="ln">5</span> }</div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Starting value is 1, not 0. Every total is off by one.</span></div><div class="hint"><span><span class="kbd">⌘⏎</span> commit</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Your turn (saboteur)</h3><p>Honest players see the same editor without the red tag. A tidy-looking refactor is the perfect hiding place.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:390px">
+        <div class="menubar"><div class="l"><span>Xcode</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>16:32</span></div></div>
+        <div class="island" style="width:600px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Sneaky Commit</b> · review</span><span class="cam"></span><span class="tab accent">0:51</span></div>
+          <div class="body">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+              <div class="glass" style="padding:8px"><div class="row" style="gap:6px; margin-bottom:6px; font-size:12px"><div class="av sm c1">MA</div>Maya · rename</div><div class="code sm"><div class="rem">-  let sum = 0;</div><div class="add">+  let total = 0;</div></div></div>
+              <div class="glass" style="padding:8px"><div class="row" style="gap:6px; margin-bottom:6px; font-size:12px"><div class="av sm c2">SA</div>Sam · guard</div><div class="code sm"><div class="add">+  if (!items?.length) return 0;</div></div></div>
+              <div class="glass" style="padding:8px; border-color:var(--acc)"><div class="row" style="gap:6px; margin-bottom:6px; font-size:12px"><div class="av sm c4">JU</div>Jun · use reduce</div><div class="code sm"><div class="add">+  return items.reduce((s, i) =&gt;</div><div class="add">+    s + i.price * i.qty, 1);</div></div></div>
+              <div class="glass" style="padding:8px"><div class="row" style="gap:6px; margin-bottom:6px; font-size:12px"><div class="av sm c5">PR</div>Priya · round</div><div class="code sm"><div class="rem">-  return sum;</div><div class="add">+  return Math.round(sum * 100) / 100;</div></div></div>
+            </div>
+            <div class="spread" style="margin-top:10px"><div class="hint"><span>Which commit broke it?</span></div><div class="hint"><span><span class="kbd">← →</span> pick</span><span><span class="kbd">Space</span> vote</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Review</h3><p>All diffs side by side. Priya's rounding change looks scarier than Jun's, which is exactly what the saboteur hopes for.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:300px">
+        <div class="menubar"><div class="l"><span>Xcode</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>16:33</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Sneaky Commit</b> · tests</span><span class="cam"></span><span class="tab">Saboteur wins</span></div>
+          <div class="body">
+            <div class="code">
+<div style="color:#B6F2C8">✓ total of 2 items is 7.50</div>
+<div style="color:#FFB3B3">✗ total([]) expected 0, got 1</div>
+<div style="color:var(--faint)">  introduced in commit 3 · Jun · "use reduce"</div>
+            </div>
+            <div class="row" style="margin-top:12px; gap:14px">
+              <div class="av lg c4 on">JU</div>
+              <div style="flex:1"><div class="mid">Jun hid the bug</div><div style="color:var(--soft); font-size:13px">Votes: Priya 3, Jun 1, Sam 0. Only Maya caught it.</div></div>
+              <div class="hint"><span><span class="kbd">Space</span> next round</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Tests and reveal</h3><p>The failing test proves who did it, so there's no arguing. Points for the saboteur if most people voted wrong.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 10 DIFFERENT QUESTION =============================== -->
+<section class="variant" id="question" style="--acc: var(--a10)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">10</span> Different Question</h2>
+      <p class="pitch">In-room party game, 3–10 people, about 90 seconds. Everyone privately answers a number question. One person secretly got a different question. Answers are revealed together; whoever looks odd has to defend their number out loud, then everyone votes.</p>
+      <div class="chips"><span class="chip">blending in</span><span class="chip">accuse and defend</span><span class="chip">90 s rounds</span><span class="chip">lowest build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Could this be a mode inside Outsider instead of its own game?</li><li>Should the odd one know they're odd? (Here they don't, which makes it funnier.)</li><li>Number answers only, or also short words?</li></ul></div>
+  </div>
+  <div class="states">
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:300px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:10</span></div></div>
+        <div class="island" style="width:500px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Different Question</b></span><span class="cam"></span><span class="tab">4 of 6 locked</span></div>
+          <div class="body">
+            <div class="row" style="gap:18px">
+              <div style="flex:1"><div class="label">Your question</div><div class="mid" style="margin-top:4px">How many cups of coffee do you drink a day?</div></div>
+              <div class="glass" style="padding:10px 18px; text-align:center"><div class="bignum accent">3</div><div class="hint" style="justify-content:center; margin-top:4px"><span><span class="kbd">↑ ↓</span></span></div></div>
+            </div>
+            <div class="spread" style="margin-top:14px"><div class="hint"><span>Someone has a different question. Maybe you.</span></div><div class="hint"><span><span class="kbd">⏎</span> lock in</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Answer</h3><p>Nobody knows who got the other question, including the person who got it.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:320px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:11</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Different Question</b> · answers</span><span class="cam"></span><span class="tab accent">0:45</span></div>
+          <div class="body">
+            <div style="color:var(--soft); font-size:13px; margin-bottom:10px">The question was: <b style="color:var(--ink)">How many cups of coffee do you drink a day?</b></div>
+            <div class="grid6">
+              <div class="tile"><div class="av sm c1">MA</div><span class="bignum" style="font-size:24px; color:var(--ink)">2</span></div>
+              <div class="tile"><div class="av sm c2">SA</div><span class="bignum" style="font-size:24px; color:var(--ink)">3</span></div>
+              <div class="tile"><div class="av sm c3">ME</div><span class="bignum" style="font-size:24px; color:var(--ink)">3</span></div>
+              <div class="tile"><span class="votes">1</span><div class="av sm c4">JU</div><span class="bignum" style="font-size:24px; color:var(--ink)">1</span></div>
+              <div class="tile sel"><span class="votes">2</span><div class="av sm c5">PR</div><span class="bignum" style="font-size:24px; color:var(--ink)">7</span></div>
+              <div class="tile"><span class="votes">3</span><div class="av sm c6">OM</div><span class="bignum" style="font-size:24px; color:var(--ink)">5</span></div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Defend your number out loud, then vote.</span></div><div class="hint"><span><span class="kbd">Space</span> vote</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Answers and vote</h3><p>The real question is shown, but the odd one doesn't know theirs was different until they see it. Omar's honest 5 draws suspicion away from Priya's 7.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:280px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:12</span></div></div>
+        <div class="island" style="width:540px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Different Question</b> · reveal</span><span class="cam"></span><span class="tab">Priya wins</span></div>
+          <div class="body">
+            <div class="row" style="gap:16px">
+              <div class="av lg c5 on">PR</div>
+              <div style="flex:1"><div class="mid">Priya had a different question</div><div style="color:var(--soft); font-size:13px; margin-top:2px">"How many hours do you sleep?" She said <b class="accent">7</b>. The room voted out Omar, who really does drink 5 coffees.</div></div>
+            </div>
+            <div class="spread" style="margin-top:14px"><div class="hint"><span>Next pair: "How many tabs open?" / "How many unread emails?"</span></div><div class="hint"><span><span class="kbd">Space</span> next</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Reveal</h3><p>The fun is in the near misses: question pairs are chosen so the honest answers overlap.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 11 FAKE SKETCH =============================== -->
+<section class="variant" id="sketch" style="--acc: var(--a11)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">11</span> Fake Sketch</h2>
+      <p class="pitch">In-room party game, 4–8 people, about 3 minutes. A shared tiny canvas lives in the notch. Each player adds one stroke towards a secret word using the trackpad. One player doesn't know the word and has to add a stroke that looks like they do. Two laps around the table, then vote.</p>
+      <div class="chips"><span class="chip">faking normal behaviour</span><span class="chip">trackpad drawing</span><span class="chip">funniest reveal</span><span class="chip">medium build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Is a canvas this size enough, or should the island grow to 700 pt wide for this game?</li><li>Should the faker get a category hint ("places")?</li><li>Should the faker be allowed one guess at the word to steal the win?</li></ul></div>
+  </div>
+  <div class="states">
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:370px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:30</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Fake Sketch</b> · lap 2</span><span class="cam"></span><span class="tab accent">your stroke</span></div>
+          <div class="body">
+            <div class="row" style="gap:16px; align-items:flex-start">
+              <svg class="pad sketch" data-faker="0" width="330" height="230" viewBox="0 0 330 230" aria-label="Shared canvas with strokes from five players forming a lighthouse"></svg>
+              <div class="col" style="flex:1; gap:10px">
+                <div><div class="label">The word</div><div class="mid accent" style="font-size:22px">Lighthouse</div></div>
+                <div class="col" style="gap:5px; font-size:12.5px; color:var(--soft)">
+                  <div class="row" style="gap:8px"><i class="sq" style="background:#F4A3A3; width:12px; height:12px"></i>Maya</div>
+                  <div class="row" style="gap:8px"><i class="sq" style="background:#A3D8F4; width:12px; height:12px"></i>Sam</div>
+                  <div class="row" style="gap:8px"><i class="sq" style="background:#F4E1A3; width:12px; height:12px"></i>Jun</div>
+                  <div class="row" style="gap:8px"><i class="sq" style="background:#D4B8F4; width:12px; height:12px"></i>Priya</div>
+                  <div class="row" style="gap:8px; color:var(--ink)"><i class="sq" style="background:#C9F4A3; width:12px; height:12px"></i>You (drawing)</div>
+                </div>
+                <div class="hint"><span>One line. Lift to finish.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Your stroke (knows the word)</h3><p>The trick for insiders: draw enough to prove you know it, not so much the faker can guess.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:370px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:30</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Fake Sketch</b> · lap 2</span><span class="cam"></span><span class="tab">Priya drawing…</span></div>
+          <div class="body">
+            <div class="row" style="gap:16px; align-items:flex-start">
+              <svg class="pad sketch" data-faker="1" width="330" height="230" viewBox="0 0 330 230" aria-label="The same canvas seen by the faker, with a live stroke in progress"></svg>
+              <div class="col" style="flex:1; gap:10px">
+                <div><div class="label">The word</div><div class="mid" style="font-size:22px; color:var(--bad)">???</div></div>
+                <span class="secret">● You're the fake artist</span>
+                <div style="font-size:12.5px; color:var(--soft)">Category: <b style="color:var(--ink)">places</b>. Something tall with stripes… a tower? Add something safe, like waves at the bottom.</div>
+                <div class="hint"><span>Your turn is next</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Faker view</h3><p>Watching others draw live is the faker's only source of clues. A vague but plausible stroke is the goal.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:300px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:33</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Fake Sketch</b> · vote</span><span class="cam"></span><span class="tab accent">0:30</span></div>
+          <div class="body">
+            <div style="color:var(--soft); font-size:13px; margin-bottom:10px">Which stroke was drawn by someone who didn't know the word?</div>
+            <div class="grid6" style="grid-template-columns:repeat(5,1fr)">
+              <div class="tile"><div class="av sm c1">MA</div>tower</div>
+              <div class="tile"><div class="av sm c2">SA</div>stripes</div>
+              <div class="tile"><span class="votes">2</span><div class="av sm c4">JU</div>light beams</div>
+              <div class="tile sel"><span class="votes">3</span><div class="av sm c5">PR</div>waves</div>
+              <div class="tile"><div class="av sm c3">ME</div>top cap</div>
+            </div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span>Hover a tile to highlight that stroke on the canvas</span></div><div class="hint"><span><span class="kbd">Space</span> vote</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Vote</h3><p>If caught, the faker gets one guess at the word to steal the round.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 12 OFF BEAT =============================== -->
+<section class="variant" id="beat" style="--acc: var(--a12)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">12</span> Off Beat</h2>
+      <p class="pitch">3–8 players on a LAN, about 2 minutes. Everyone taps Space to a shared rhythm to keep the group's streak alive. One saboteur taps slightly off on purpose to break it. The game shows the combined beat and vague hints about who missed. Vote between songs.</p>
+      <div class="chips"><span class="chip">teamwork with a traitor</span><span class="chip">one key</span><span class="chip">real-time</span><span class="chip">needs low lag</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Honest players miss too. Is that enough cover for the saboteur, or too much?</li><li>Hints by seat ("someone on the left") or by timing ("someone was early")?</li><li>Needs sound to work well. Notch Dino has none. OK to add for this?</li></ul></div>
+  </div>
+  <div class="states">
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:320px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:40</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Off Beat</b> · song 2 of 3</span><span class="cam"></span><span class="tab accent">streak 34</span></div>
+          <div class="body">
+            <svg class="pad lane" data-sab="0" width="540" height="120" viewBox="0 0 540 120" aria-label="Beat lane: notes slide left to a hit line; past beats show group accuracy"></svg>
+            <div class="spread" style="margin-top:12px"><div class="row" style="gap:10px; font-size:12.5px; color:var(--soft)"><span>Group accuracy</span><div class="bar" style="width:140px"><i style="width:82%"></i></div><span class="tab">82%</span></div><div class="hint"><span><span class="kbd">Space</span> tap on the line</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Player view</h3><p>Past beats leave a mark: green for a clean group hit, orange when someone was off. You never see whose tap was off, only that one was.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:320px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:40</span></div></div>
+        <div class="island" style="width:580px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Off Beat</b> · song 2 of 3</span><span class="cam"></span><span class="tab accent">streak 34</span></div>
+          <div class="body">
+            <svg class="pad lane" data-sab="1" width="540" height="120" viewBox="0 0 540 120" aria-label="The same beat lane for the saboteur, with suggested beats to miss marked"></svg>
+            <div class="spread" style="margin-top:12px"><span class="secret">● You're the saboteur</span><div class="hint"><span>Miss up to 1 beat in 4. More and the hints point at you.</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Saboteur view</h3><p>Dashed rings mark good beats to miss: busy moments when honest players often miss anyway.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:320px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:42</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Off Beat</b> · between songs</span><span class="cam"></span><span class="tab accent">vote 0:30</span></div>
+          <div class="body">
+            <div class="col" style="gap:5px; font-size:13px; margin-bottom:12px">
+              <div class="glass" style="padding:7px 12px">Beat 12: someone was <b>early</b> by a lot</div>
+              <div class="glass" style="padding:7px 12px">Beat 27: someone on <b>Maya's side</b> of the table missed</div>
+              <div class="glass" style="padding:7px 12px">Beat 40: two people missed together</div>
+            </div>
+            <div class="grid6">
+              <div class="tile"><div class="av sm c1">MA</div>91%</div>
+              <div class="tile sel"><span class="votes">2</span><div class="av sm c2">SA</div>78%</div>
+              <div class="tile"><div class="av sm c3">ME</div>88%</div>
+              <div class="tile"><span class="votes">1</span><div class="av sm c4">JU</div>80%</div>
+              <div class="tile"><div class="av sm c5">PR</div>86%</div>
+              <div class="tile"><div class="av sm c6">OM</div>84%</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Hints and vote</h3><p>Each player's accuracy is public, but the saboteur can keep theirs in the normal range. The hints are where the real clues are.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 13 SPOT THE BOT =============================== -->
+<section class="variant" id="bot" style="--acc: var(--a13)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">13</span> Spot the Bot</h2>
+      <p class="pitch">3–6 players, about 3 minutes. An anonymous group chat in the notch, everyone under a random nickname. One participant is Claude, told to act like a coworker. Chat, then vote on who's the bot. Flip mode: one human pretends to be the bot and everyone else has to find them.</p>
+      <div class="chips"><span class="chip">pure deception</span><span class="chip">anonymous chat</span><span class="chip">needs internet</span><span class="chip">medium build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Needs internet and an AI model. That breaks Notch Dino's "no internet" promise, so it would be a separate app or a clearly opt-in mode. OK?</li><li>Should the bot be told to make typos, or is a too-polished bot the fun tell?</li><li>Flip mode (human pretends to be the bot) or normal mode first?</li></ul></div>
+  </div>
+  <div class="states">
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:400px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:50</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Spot the Bot</b> · 5 in chat</span><span class="cam"></span><span class="tab accent">2:10</span></div>
+          <div class="body">
+            <div class="chat">
+              <div class="bubble"><div class="who">Otter</div>ok who else is pretending to work right now</div>
+              <div class="bubble"><div class="who">Fern</div>me. 14 tabs open and none are work</div>
+              <div class="bubble"><div class="who">Comet</div>Honestly, same! Fourteen tabs is very relatable 😄</div>
+              <div class="bubble"><div class="who">Quill</div>comet what's the 14th tab</div>
+              <div class="bubble me"><div class="who">Moth (you)</div>comet that was suspiciously enthusiastic<span class="caret"></span></div>
+            </div>
+            <div class="spread" style="margin-top:10px"><div class="hint"><span>Uses Claude over the internet · opt-in</span></div><div class="hint"><span><span class="kbd">⏎</span> send</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Chat</h3><p>Nicknames are shuffled every round so you can't spot coworkers by habit. Everyone, including the bot, has the same send rate.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:300px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Fri 13 Nov</span><span>17:53</span></div></div>
+        <div class="island" style="width:560px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Spot the Bot</b> · reveal</span><span class="cam"></span><span class="tab">Bot wins</span></div>
+          <div class="body">
+            <div class="grid6" style="grid-template-columns:repeat(5,1fr)">
+              <div class="tile"><b style="color:var(--ink)">Otter</b>Maya</div>
+              <div class="tile" style="border-color:var(--acc)"><b style="color:var(--acc)">Fern</b>Claude</div>
+              <div class="tile sel"><span class="votes">4</span><b style="color:var(--ink)">Comet</b>Sam</div>
+              <div class="tile"><b style="color:var(--ink)">Quill</b>Jun</div>
+              <div class="tile"><b style="color:var(--ink)">Moth</b>You</div>
+            </div>
+            <div style="margin-top:14px; font-size:13.5px"><b>Fern was the bot.</b> <span style="color:var(--soft)">Comet is Sam, who is just very polite. 4 of 4 humans voted for Sam.</span></div>
+            <div class="spread" style="margin-top:12px"><div class="hint"><span><span class="kbd">F</span> flip mode next</span></div><div class="hint"><span><span class="kbd">Space</span> next round</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Reveal</h3><p>The punchline is usually a human mistaken for the bot. That's the moment the room laughs.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- =============================== 14 SLEEPER =============================== -->
+<section class="variant" id="sleeper" style="--acc: var(--a14)">
+  <div class="vhead">
+    <div>
+      <h2><span class="num">14</span> Sleeper</h2>
+      <p class="pitch">Solo, about 10 minutes split over 5 short "days". You're the saboteur and the crew are AI. Crew members do tasks, notice where you were and report it at the evening meeting. Sabotage the base without getting voted out. The traitor role, usually the most fun, playable alone.</p>
+      <div class="chips"><span class="chip">play the traitor</span><span class="chip">solo</span><span class="chip">AI that suspects you</span><span class="chip">high build cost</span></div>
+    </div>
+    <div class="review"><b>Review</b><ul><li>Rule-based AI crew (cheaper, offline) or a language model (richer, needs internet)?</li><li>Should days be playable one at a time, like a daily puzzle?</li><li>Is a suspicion meter per crew member too much of a hint, or a fair one?</li></ul></div>
+  </div>
+  <div class="states">
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:470px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sat 14 Nov</span><span>10:15</span></div></div>
+        <div class="island" style="width:600px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Sleeper</b> · day 3 of 5</span><span class="cam"></span><span class="tab accent">14:10</span></div>
+          <div class="body">
+            <svg class="pad" id="base" width="560" height="200" viewBox="0 0 560 200" aria-label="Small base map with five rooms, four AI crew and you near the generator"></svg>
+            <div class="row" style="margin-top:12px; gap:14px; align-items:flex-start">
+              <div class="col" style="flex:1; gap:6px; font-size:12.5px">
+                <div class="label">How much they suspect you</div>
+                <div class="row" style="gap:8px"><span style="width:34px">Orla</span><div class="bar" style="flex:1"><i style="width:62%; background:var(--bad)"></i></div><span class="tab" style="width:30px">62%</span></div>
+                <div class="row" style="gap:8px"><span style="width:34px">Ivo</span><div class="bar" style="flex:1"><i style="width:35%"></i></div><span class="tab" style="width:30px">35%</span></div>
+                <div class="row" style="gap:8px"><span style="width:34px">Bex</span><div class="bar" style="flex:1"><i style="width:18%"></i></div><span class="tab" style="width:30px">18%</span></div>
+                <div class="row" style="gap:8px"><span style="width:34px">Tam</span><div class="bar" style="flex:1"><i style="width:10%"></i></div><span class="tab" style="width:30px">10%</span></div>
+              </div>
+              <div class="col" style="gap:6px; font-size:12.5px; width:210px">
+                <div class="label">Sabotage here</div>
+                <div class="glass" style="padding:6px 10px"><span class="kbd">1</span> cut power (Orla can see)</div>
+                <div class="glass" style="padding:6px 10px; opacity:.5"><span class="kbd">2</span> spoil seeds (Greenhouse)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Day</h3><p>Arrows move you between rooms. Each crew member's sight cone shows who could witness a sabotage. Doing it in view raises their suspicion.</p></figcaption>
+    </figure>
+
+    <figure class="state">
+      <div class="scroller"><div class="desk" style="height:440px">
+        <div class="menubar"><div class="l"><span>Finder</span><span>File</span><span>Edit</span></div><div class="r tab"><span>Sat 14 Nov</span><span>10:18</span></div></div>
+        <div class="island" style="width:600px">
+          <div class="glow"></div>
+          <div class="band"><span><b>Sleeper</b> · evening meeting</span><span class="cam"></span><span class="tab">day 3</span></div>
+          <div class="body">
+            <div class="chat" style="gap:6px">
+              <div class="bubble" style="max-width:100%"><div class="who">Orla</div>I saw you leave the generator just before the power cut.</div>
+              <div class="bubble" style="max-width:100%"><div class="who">Bex</div>They were with me in the greenhouse until 2pm, though.</div>
+              <div class="bubble" style="max-width:100%"><div class="who">Ivo</div>Tam was alone in the lab all afternoon. Nobody saw Tam.</div>
+            </div>
+            <div class="label" style="margin:12px 0 6px">Your answer</div>
+            <div class="col" style="gap:5px; font-size:13px">
+              <div class="glass" style="padding:7px 12px; border-color:var(--acc)"><span class="kbd">1</span> "I was fixing the vent fan. Ask Bex where I was."</div>
+              <div class="glass" style="padding:7px 12px"><span class="kbd">2</span> "Tam had the generator keys today."</div>
+              <div class="glass" style="padding:7px 12px"><span class="kbd">3</span> Say nothing</div>
+            </div>
+            <div class="spread" style="margin-top:10px"><div class="hint"><span>If they voted now: you 2, Tam 2</span></div></div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><h3>Evening meeting</h3><p>The crew argue from what they actually saw. Your answer shifts their suspicion. Blaming Tam works only if nobody can vouch for Tam.</p></figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+(function () {
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+  const text = (parent, x, y, s, attrs) => { const t = el("text", Object.assign({ x, y, "font-size": 10.5, fill: "rgba(255,255,255,.45)" }, attrs || {}), parent); t.textContent = s; return t; };
+
+  // Fake Sketch canvases
+  document.querySelectorAll("svg.sketch").forEach(svg => {
+    const faker = svg.dataset.faker === "1";
+    const stroke = (d, c, extra) => el("path", Object.assign({ d, fill: "none", stroke: c, "stroke-width": 3, "stroke-linecap": "round", "stroke-linejoin": "round" }, extra || {}), svg);
+    stroke("M140 200 L152 80 L178 80 L190 200", "#F4A3A3");               // tower (Maya)
+    stroke("M147 160 L183 155 M149 125 L181 120", "#A3D8F4");            // stripes (Sam)
+    stroke("M178 70 L250 40 M178 76 L255 80 M152 70 L85 45", "#F4E1A3"); // beams (Jun)
+    if (faker) stroke("M60 212 Q80 200 100 212 Q110 218 120 216", "#D4B8F4"); // waves in progress (Priya)
+    else stroke("M60 212 Q80 200 100 212 Q120 224 140 212 M190 212 Q210 200 230 212 Q250 224 270 212", "#D4B8F4");
+    if (!faker) stroke("M146 80 L165 58 L184 80", "#C9F4A3", { "stroke-dasharray": "4 4" }); // your stroke in progress
+    if (faker) el("circle", { cx: 120, cy: 216, r: 4, fill: "#D4B8F4" }, svg);
+  });
+
+  // Off Beat lanes
+  document.querySelectorAll("svg.lane").forEach(svg => {
+    const sab = svg.dataset.sab === "1";
+    const hitX = 110, mid = 60;
+    el("line", { x1: 20, x2: 520, y1: mid, y2: mid, stroke: "rgba(255,255,255,.1)", "stroke-width": 2 }, svg);
+    el("rect", { x: hitX - 2, y: 18, width: 4, height: 84, rx: 2, fill: "#C6F04F" }, svg);
+    text(svg, hitX - 12, 14, "tap", { fill: "rgba(198,240,79,.8)" });
+    // past beats
+    [{ x: 30, ok: 1 }, { x: 55, ok: 1 }, { x: 80, ok: 0 }].forEach(b => el("circle", { cx: b.x, cy: mid, r: 6, fill: b.ok ? "rgba(198,240,79,.35)" : "rgba(255,150,70,.55)" }, svg));
+    // upcoming notes
+    [140, 180, 210, 250, 300, 330, 360, 410, 460, 500].forEach((x, i) => {
+      el("circle", { cx: x, cy: mid, r: 9, fill: "#0B0A09", stroke: "rgba(255,255,255,.7)", "stroke-width": 2 }, svg);
+      if (sab && (i === 2 || i === 6)) {
+        el("circle", { cx: x, cy: mid, r: 15, fill: "none", stroke: "#FF5A5A", "stroke-width": 1.5, "stroke-dasharray": "3 3" }, svg);
+        text(svg, x - 10, mid + 32, "miss?", { fill: "#FFB3B3" });
+      }
+    });
+    // other players' taps as ticks near hit line
+    [-3, 1, 2, -1, 4].forEach((o, i) => el("line", { x1: hitX + o, x2: hitX + o, y1: 30 + i * 3, y2: 40 + i * 3, stroke: "rgba(255,255,255,.35)", "stroke-width": 1.5 }, svg));
+  });
+
+  // Sleeper base map
+  const base = document.getElementById("base");
+  if (base) {
+    const room = (x, y, w, h, n) => { el("rect", { x, y, width: w, height: h, rx: 8, fill: "rgba(255,255,255,.03)", stroke: "rgba(255,255,255,.13)" }, base); text(base, x + 10, y + 18, n, { "font-weight": 600, fill: "rgba(255,255,255,.4)" }); };
+    room(10, 10, 160, 85, "Greenhouse");
+    room(10, 105, 160, 85, "Dock");
+    room(180, 10, 200, 180, "Mess");
+    room(390, 10, 160, 85, "Generator");
+    room(390, 105, 160, 85, "Lab");
+    // doors
+    [[170, 45], [170, 145], [380, 45], [380, 145]].forEach(([x, y]) => el("rect", { x, y, width: 10, height: 18, fill: "#0B0A09" }, base));
+    // Orla's sight cone towards generator
+    el("path", { d: "M330 70 L410 30 L410 90 Z", fill: "rgba(255,90,90,.12)" }, base);
+    const crew = (x, y, n, c) => { el("circle", { cx: x, cy: y, r: 7, fill: c }, base); text(base, x - 12, y + 20, n, { "font-size": 10, fill: "rgba(255,255,255,.6)" }); };
+    crew(330, 70, "Orla", "#F4A3A3");
+    crew(90, 60, "Bex", "#A3D8F4");
+    crew(460, 160, "Tam", "#F4E1A3");
+    crew(250, 140, "Ivo", "#D4B8F4");
+    el("circle", { cx: 450, cy: 55, r: 9, fill: "#E6B07A", stroke: "#fff", "stroke-width": 2 }, base);
+    text(base, 440, 80, "you", { "font-size": 10, "font-weight": 700, fill: "#E6B07A" });
+    // generator icon
+    el("rect", { x: 500, y: 40, width: 30, height: 30, rx: 5, fill: "none", stroke: "rgba(230,176,122,.6)", "stroke-dasharray": "3 3" }, base);
+    text(base, 506, 60, "⚡", { "font-size": 14, fill: "#E6B07A" });
+  }
+})();
+</script>
+
+<!-- =============================== COMPARE =============================== -->
+<section class="variant compare" id="compare">
+  <div class="vhead" style="grid-template-columns:1fr"><div><h2>Compare</h2><p class="pitch">Strongest picks across both rounds: <b>Codeword</b> (most original fit for the notch, tiny build), <b>Outsider</b> with <b>Different Question</b> as a second mode (cheapest party games, the room does the talking), and <b>Sleeper</b> if you want a solo game. Blend remains the most ambitious design.</p></div></div>
+  <div class="scroller">
+  <table>
+    <thead><tr><th>Variant</th><th>Players</th><th>Length</th><th>Build cost</th><th>Needs</th><th>Strength</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--a1)">Outsider</td><td>3–10, same room</td><td>5 min</td><td>Low</td><td>LAN for more than 2</td><td>The room does the hard part</td></tr>
+      <tr><td style="color:var(--a2)">Whisper</td><td>4+, office</td><td>All day</td><td>Medium</td><td>LAN for more than 2, quiet alerts</td><td>Ambient, fits between tasks</td></tr>
+      <tr><td style="color:var(--a3)">Blend</td><td>2–6</td><td>2 min</td><td>High</td><td>Convincing bot movement</td><td>Purest deception mechanic</td></tr>
+      <tr><td style="color:var(--a4)">Fuse</td><td>3–8</td><td>3 min</td><td>Medium</td><td>LAN for more than 2, puzzles</td><td>Watch-vs-work tension</td></tr>
+      <tr><td style="color:var(--a5)">Daily Liar</td><td>1</td><td>2 min</td><td>Low</td><td>Puzzle writing</td><td>Daily habit</td></tr>
+      <tr><td style="color:var(--a6)">Alibi</td><td>4+, office</td><td>All day</td><td>Very high</td><td>Proximity sensing, privacy design</td><td>Closest to Among Us</td></tr>
+      <tr><td style="color:var(--a7)">Codeword</td><td>4+, office</td><td>All day</td><td>Low</td><td>LAN or shared code, 5pm reveal</td><td>Your real workday is the board</td></tr>
+      <tr><td style="color:var(--a8)">Target</td><td>5+, office</td><td>Days</td><td>Low</td><td>Chain tracking, dispute rule</td><td>Lasting office legend</td></tr>
+      <tr><td style="color:var(--a9)">Sneaky Commit</td><td>3–6 devs</td><td>5 min</td><td>Medium</td><td>Snippets with tests</td><td>Made for the people who own notches</td></tr>
+      <tr><td style="color:var(--a10)">Different Question</td><td>3–10, same room</td><td>90 s</td><td>Lowest</td><td>Question pairs</td><td>Fastest round of all</td></tr>
+      <tr><td style="color:var(--a11)">Fake Sketch</td><td>4–8, same room</td><td>3 min</td><td>Medium</td><td>Trackpad drawing, stroke sync</td><td>Funniest reveal</td></tr>
+      <tr><td style="color:var(--a12)">Off Beat</td><td>3–8</td><td>2 min</td><td>Medium</td><td>Low-lag LAN timing</td><td>One key, real-time</td></tr>
+      <tr><td style="color:var(--a13)">Spot the Bot</td><td>3–6</td><td>3 min</td><td>Medium</td><td>Internet and an AI model</td><td>Most timely</td></tr>
+      <tr><td style="color:var(--a14)">Sleeper</td><td>1</td><td>10 min (5 days)</td><td>High</td><td>AI crew that suspects believably</td><td>Play the traitor, alone</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<footer>Static mockup. Islands are drawn at roughly 1:1 points, with fixed layouts sized to fit the content. The arenas and office plan are drawn from a fixed seed so they look the same every time.</footer>
+
+<script>
+(function () {
+  // seeded random so the page looks the same every load
+  let s = 7;
+  const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+
+  const W = 540, H = 250;
+  const dots = Array.from({ length: 30 }, () => ({ x: 20 + rnd() * (W - 40), y: 18 + rnd() * (H - 36) }));
+  const me = dots[11]; me.x = 190; me.y = 120;
+  const other = dots[22];
+
+  function drawDots(svg, opts) {
+    for (let i = 0; i < 40; i++) el("circle", { cx: rnd() * W, cy: rnd() * H, r: .7, fill: "rgba(255,255,255,.12)" }, svg);
+    dots.forEach((d, i) => {
+      const grey = opts.missed && opts.missed.includes(i);
+      el("circle", { cx: d.x, cy: d.y, r: 5, fill: grey ? "rgba(255,255,255,.18)" : "#CFE9D8", opacity: grey ? 1 : .85 }, svg);
+    });
+  }
+
+  // hider
+  const hide = document.getElementById("arena-hide");
+  drawDots(hide, {});
+  [[150, 70, "1", true], [400, 190, "2", false], [460, 60, "3", false]].forEach(([x, y, n, done]) => {
+    el("circle", { cx: x, cy: y, r: 15, fill: done ? "rgba(108,242,155,.18)" : "none", stroke: "#6CF29B", "stroke-width": 1.5, "stroke-dasharray": done ? "" : "3 3", opacity: done ? .9 : .75 }, hide);
+    const t = el("text", { x, y: y + 4, "text-anchor": "middle", "font-size": 11, "font-weight": 700, fill: "#6CF29B" }, hide); t.textContent = n;
+  });
+  el("circle", { cx: me.x, cy: me.y, r: 11, fill: "none", stroke: "#6CF29B", "stroke-width": 2 }, hide);
+  el("circle", { cx: me.x, cy: me.y, r: 5, fill: "#6CF29B" }, hide);
+  const lbl = el("text", { x: me.x + 15, y: me.y - 9, "font-size": 10.5, "font-weight": 600, fill: "#6CF29B" }, hide); lbl.textContent = "you";
+
+  // seeker
+  const seek = document.getElementById("arena-seek");
+  drawDots(seek, { missed: [4] });
+  const t = dots[17];
+  el("circle", { cx: t.x, cy: t.y, r: 14, fill: "none", stroke: "#6CF29B", "stroke-width": 1.5 }, seek);
+  [[-22, -8, 0, 0], [8, 22, 0, 0], [0, 0, -22, -8], [0, 0, 8, 22]].forEach(([x1, x2, y1, y2]) =>
+    el("line", { x1: t.x + x1, x2: t.x + x2, y1: t.y + y1, y2: t.y + y2, stroke: "#6CF29B", "stroke-width": 1.5 }, seek));
+  const m = dots[4];
+  const mt = el("text", { x: m.x + 9, y: m.y - 7, "font-size": 10, fill: "rgba(255,255,255,.45)" }, seek); mt.textContent = "bot";
+
+  // replay
+  const rep = document.getElementById("arena-replay");
+  for (let i = 0; i < 40; i++) el("circle", { cx: rnd() * W, cy: rnd() * H, r: .7, fill: "rgba(255,255,255,.12)" }, rep);
+  dots.forEach((d, i) => {
+    if (d === me || d === other) return;
+    let x = d.x, y = d.y, p = `M${x.toFixed(1)} ${y.toFixed(1)}`, a = rnd() * 6.28;
+    for (let k = 0; k < 7; k++) { a += (rnd() - .5) * 1.2; x += Math.cos(a) * 14; y += Math.sin(a) * 14; p += ` Q${(x - Math.cos(a) * 7).toFixed(1)} ${(y - Math.sin(a) * 7 + 3).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}`; }
+    el("path", { d: p, fill: "none", stroke: "rgba(255,255,255,.16)", "stroke-width": 1.2, "stroke-linecap": "round" }, rep);
+    el("circle", { cx: x, cy: y, r: 3, fill: "rgba(255,255,255,.3)" }, rep);
+  });
+  el("path", { d: "M190 120 Q170 95 150 70 Q230 90 300 140 Q360 175 400 190 Q440 130 460 60", fill: "none", stroke: "#C9F4A3", "stroke-width": 2.2, "stroke-linecap": "round" }, rep);
+  el("circle", { cx: 460, cy: 60, r: 5, fill: "#C9F4A3" }, rep);
+  el("path", { d: "M80 200 L120 170 L160 205 L210 160 L250 200", fill: "none", stroke: "#D4B8F4", "stroke-width": 2.2, "stroke-linecap": "round", "stroke-linejoin": "round" }, rep);
+  el("path", { d: "M244 194 l12 12 M256 194 l-12 12", stroke: "#FF5A5A", "stroke-width": 2 }, rep);
+  const r1 = el("text", { x: 466, y: 52, "font-size": 10.5, "font-weight": 600, fill: "#C9F4A3" }, rep); r1.textContent = "you";
+  const r2 = el("text", { x: 262, y: 214, "font-size": 10.5, "font-weight": 600, fill: "#D4B8F4" }, rep); r2.textContent = "Priya, tagged";
+
+  // office
+  const off = document.getElementById("office");
+  const room = (x, y, w, h, name) => {
+    el("rect", { x, y, width: w, height: h, rx: 8, fill: "rgba(255,255,255,.03)", stroke: "rgba(255,255,255,.12)" }, off);
+    const tx = el("text", { x: x + 10, y: y + 18, "font-size": 10.5, fill: "rgba(255,255,255,.4)", "font-weight": 600 }, off); tx.textContent = name;
+  };
+  room(10, 10, 300, 200, "Desks");
+  room(320, 10, 210, 95, "Meeting room");
+  room(320, 115, 120, 95, "Kitchen");
+  room(450, 115, 80, 95, "Phone booth");
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) el("rect", { x: 30 + c * 68, y: 40 + r * 55, width: 50, height: 22, rx: 3, fill: "rgba(255,255,255,.05)" }, off);
+  const zone = (x, y, r) => el("circle", { cx: x, cy: y, r, fill: "rgba(255,95,162,.06)", stroke: "rgba(255,95,162,.25)", "stroke-dasharray": "3 3" }, off);
+  zone(380, 165, 34);
+  const mac = (x, y, init, cls, me) => {
+    el("circle", { cx: x, cy: y, r: me ? 9 : 7, fill: cls, stroke: me ? "#FF5FA2" : "none", "stroke-width": 2 }, off);
+    const tx = el("text", { x, y: y + 20, "text-anchor": "middle", "font-size": 9.5, fill: "rgba(255,255,255,.6)" }, off); tx.textContent = init;
+  };
+  mac(365, 160, "you", "#C9F4A3", true);
+  mac(395, 172, "Dana", "#F4C9A3");
+  mac(370, 50, "Maya", "#F4A3A3"); mac(410, 60, "Sam", "#A3D8F4"); mac(450, 48, "Omar", "#F4BFE0");
+  mac(120, 100, "Jun", "#F4E1A3");
+  el("circle", { cx: 250, cy: 155, r: 7, fill: "rgba(255,255,255,.12)" }, off);
+  const pz = el("text", { x: 250, y: 175, "text-anchor": "middle", "font-size": 9.5, fill: "rgba(255,255,255,.35)" }, off); pz.textContent = "Priya (lid closed)";
+})();
+</script>
+</body>
+</html>
