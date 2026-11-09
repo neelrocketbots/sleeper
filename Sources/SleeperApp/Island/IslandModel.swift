@@ -102,15 +102,29 @@ import SwiftUI
         dock()
     }
 
-    /// Set while the user drags the island, so programmatic moves never snap it.
-    var userDragged = false
+    /// While dragging: the island would dock if let go now (the view shows a hint).
+    var dockPreview = false
 
-    /// After a drag: snap into the notch when let go near it, otherwise float.
-    func settleAfterDrag() {
-        guard userDragged, let panel, let screen = panel.screen ?? NSScreen.main else { return }
+    /// Is the island's top centre close enough to the notch to dock?
+    func nearNotch() -> Bool {
+        guard let panel, let screen = panel.screen ?? NSScreen.main else { return false }
         let islandTop = panel.frame.maxY - NotchFloat.margin
-        if screen.frame.maxY - islandTop < 70 && abs(panel.frame.midX - screen.frame.midX) < 180 { dock() } else { docked = false }
-        userDragged = false
+        return screen.frame.maxY - islandTop < 110 && abs(panel.frame.midX - screen.frame.midX) < 220
+    }
+
+    /// After a drag: dock when let go near the notch; otherwise float, kept on screen below the menu bar.
+    func settle() {
+        guard let panel, let screen = panel.screen ?? NSScreen.main else { return }
+        if nearNotch() { dock(animate: true); return }
+        docked = false
+        var f = panel.frame
+        let visible = screen.visibleFrame
+        let m = NotchFloat.margin
+        if f.maxY - m > visible.maxY { f.origin.y = visible.maxY - f.height + m }
+        if f.minY + m < visible.minY { f.origin.y = visible.minY - m }
+        if f.minX + m < visible.minX { f.origin.x = visible.minX - m }
+        if f.maxX - m > visible.maxX { f.origin.x = visible.maxX - f.width + m }
+        if f != panel.frame { panel.setFrame(f, display: true, animate: true) }
     }
 
     func toggleDock() { if docked { docked = false; placeAtTopCentre() } else { dock() } }

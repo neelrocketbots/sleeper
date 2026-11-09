@@ -11,7 +11,8 @@ import SwiftUI
     private var statusItem: NSStatusItem?
     private var keyMonitor: Any?
     private var mouseMonitor: Any?
-    private var moveSerial = 0
+    private struct Drag { var pointer: CGPoint; var origin: CGPoint; var wasDocked: Bool; var moving = false }
+    private var drag: Drag?
     private var hotKey: HotKey?
     var snapshotDir: URL?
     var selfTest = false
@@ -44,36 +45,39 @@ import SwiftUI
         }
         // Drag the island by its header band with the system window drag (reliable on a borderless panel, first click
         // included). Double-click the band to send it back to the top centre.
-        mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown]) { [weak self] e in
+        // Drag the island by its header band. We move the window ourselves (the system drag keeps windows out of
+        // the menu bar), and when it's let go near the top centre it docks into the notch.
+        mouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .leftMouseDragged, .leftMouseUp]) { [weak self] e in
             guard let self, let panel = self.panel, let island = self.island, e.window === panel else { return e }
-            if island.collapsed { self.show(); return nil }
-            let p = e.locationInWindow
-            let m = NotchFloat.margin
-            let band = max(32, island.geometry.notch.height)
-            let top = panel.frame.height - m
-            guard p.x >= m, p.x <= panel.frame.width - m, p.y <= top, p.y >= top - band else { return e }
-            if e.clickCount == 2 { island.toggleDock(); return nil }
-            panel.makeKey()
-            let wasDocked = island.docked, start = panel.frame
-            island.docked = false
-            island.userDragged = true
-            panel.performDrag(with: e)
-            // A click that didn't move anything leaves the island as it was. A real drag settles when the window
-            // stops moving (see the move observer).
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                if panel.frame == start { island.docked = wasDocked; island.userDragged = false }
-            }
-            return nil
-        }
-        NotificationCenter.default.addObserver(forName: NSWindow.didMoveNotification, object: panel, queue: .main) { [weak self] _ in
-            MainActor.assumeIsolated {
-                guard let self else { return }
-                self.moveSerial += 1
-                let serial = self.moveSerial
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                    guard serial == self.moveSerial, let island = self.island, !island.docked else { return }
-                    island.settleAfterDrag()
-                }
+            switch e.type {
+            case .leftMouseDown:
+                if island.collapsed { self.show(); return nil }
+                let p = e.locationInWindow
+                let m = NotchFloat.margin
+                let band = max(32, island.geometry.notch.height)
+                let top = panel.frame.height - m
+                guard p.x >= m, p.x <= panel.frame.width - m, p.y <= top, p.y >= top - band else { return e }
+                if e.clickCount == 2 { island.toggleDock(); return nil }
+                panel.makeKey()
+                self.drag = Drag(pointer: NSEvent.mouseLocation, origin: panel.frame.origin, wasDocked: island.docked)
+                return nil
+            case .leftMouseDragged:
+                guard var d = self.drag else { return e }
+                let now = NSEvent.mouseLocation
+                let dx = now.x - d.pointer.x, dy = now.y - d.pointer.y
+                if !d.moving, hypot(dx, dy) < 4 { return nil }
+                if !d.moving { d.moving = true; island.docked = false; self.drag = d }
+                panel.setFrameOrigin(CGPoint(x: d.origin.x + dx, y: d.origin.y + dy))
+                island.dockPreview = island.nearNotch()
+                return nil
+            case .leftMouseUp:
+                guard let d = self.drag else { return e }
+                self.drag = nil
+                island.dockPreview = false
+                if d.moving { island.settle() } else { island.docked = d.wasDocked }
+                return nil
+            default:
+                return e
             }
         }
         NotificationCenter.default.addObserver(forName: NSWindow.didResignKeyNotification, object: panel, queue: .main) { [weak self] _ in
@@ -91,10 +95,21 @@ import SwiftUI
                 let sc = panel.screen ?? NSScreen.main!
                 print("screen", sc.frame, "visible", sc.visibleFrame, "safeTop", sc.safeAreaInsets.top)
                 print("notch", island.geometry.notch, "panel", panel.frame, "islandTop", panel.frame.maxY - NotchFloat.margin)
-                island.collapse()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    print("collapsed panel", panel.frame, "islandTop", panel.frame.maxY - NotchFloat.margin)
-                    NSApp.terminate(nil)
+                // A drag that ends just below the menu bar, a little off centre: should dock.
+                island.docked = false
+                panel.setFrameOrigin(CGPoint(x: panel.frame.origin.x + 60, y: panel.frame.origin.y - 70))
+                print("near notch?", island.nearNotch())
+                island.settle()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    print("after settle near: docked", island.docked, "panel", panel.frame, "islandTop", panel.frame.maxY - NotchFloat.margin)
+                    // A drag that ends in the middle of the screen: should float there.
+                    panel.setFrameOrigin(CGPoint(x: 300, y: 300))
+                    island.docked = false
+                    island.settle()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        print("after settle far: docked", island.docked, "panel", panel.frame)
+                        NSApp.terminate(nil)
+                    }
                 }
             }
         }

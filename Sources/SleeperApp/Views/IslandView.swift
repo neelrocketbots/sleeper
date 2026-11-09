@@ -41,7 +41,7 @@ struct IslandView: View {
             }
             .clipShape(shape)
             }
-            shape.stroke(.white.opacity(0.08), lineWidth: 1)
+            shape.stroke(island.dockPreview ? Theme.accent.opacity(0.9) : .white.opacity(0.08), lineWidth: island.dockPreview ? 2 : 1)
                 .allowsHitTesting(false)
         }
         .frame(width: island.size.width, height: island.size.height)
