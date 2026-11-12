@@ -1,5 +1,8 @@
 # Sleeper
 
+[![Latest release](https://img.shields.io/github/v/release/neelrocketbots/sleeper?label=download)](https://github.com/neelrocketbots/sleeper/releases/latest)
+[![CI](https://github.com/neelrocketbots/sleeper/actions/workflows/ci.yml/badge.svg)](https://github.com/neelrocketbots/sleeper/actions/workflows/ci.yml)
+
 A social deduction game that lives in the MacBook notch. Eight axolotls run **The Abyss**, a cluster of domes on the deep
 ocean floor joined by glass tunnels. One of them is a traitor. Everything is painted in a storybook style: ink lines and
 watercolour.
@@ -142,3 +145,7 @@ minutes.
 ## Not yet
 
 LAN and online multiplayer, vents, sound, more than one traitor, and cosmetics beyond hats.
+
+## License
+
+MIT — see [LICENSE](LICENSE).

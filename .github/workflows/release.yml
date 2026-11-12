@@ -1,0 +1,38 @@
+name: Release
+
+# A tag `vX.Y.Z` builds the ad-hoc signed Sleeper.app at that version, zips it and publishes a GitHub Release with
+# GitHub's generated notes (pull requests by label, .github/release.yml) and the zip attached.
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: build and publish
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the bundle's build number is the commit count
+      - name: Test
+        run: swift test
+      - name: Build Sleeper.app
+        run: VERSION="${GITHUB_REF_NAME#v}" scripts/build-app.sh
+      - name: Zip
+        run: ditto -c -k --keepParent .build/app/Sleeper.app "Sleeper-${GITHUB_REF_NAME}.zip"
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          case "$GITHUB_REF_NAME" in *-*) pre=--prerelease ;; *) pre= ;; esac
+          cat > notes.md <<'NOTES'
+          **Install:** unzip, drag `Sleeper.app` to Applications and open it. The app is signed ad hoc, not notarized,
+          so the first launch is blocked: open System Settings › Privacy & Security and click **Open Anyway**, or build it
+          yourself with `scripts/build-app.sh`. Needs macOS 26 or later.
+
+          NOTES
+          gh release create "$GITHUB_REF_NAME" --verify-tag --title "Sleeper $GITHUB_REF_NAME" \
+            --notes-file notes.md --generate-notes $pre "Sleeper-${GITHUB_REF_NAME}.zip"

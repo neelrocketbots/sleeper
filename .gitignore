@@ -4,7 +4,7 @@
 *.xcodeproj/
 DerivedData/
 
-# Local settings and secrets (the Copilot token lives here)
+# Local settings
 .claude/settings.local.json
 .codex/
 

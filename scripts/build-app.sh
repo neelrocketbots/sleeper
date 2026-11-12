@@ -2,6 +2,10 @@
 # Builds Sleeper.app (release, ad-hoc signed) into .build/app.
 set -eu
 cd "$(dirname "$0")/.."
+# The version: VERSION in the environment, else the newest tag (v1.2.3 → 1.2.3), else 0.0.0.
+VERSION="${VERSION:-$(git describe --tags --abbrev=0 2>/dev/null || echo v0.0.0)}"
+VERSION="${VERSION#v}"
+BUILD="${BUILD:-$(git rev-list --count HEAD 2>/dev/null || echo 1)}"
 swift build -c release
 APP=.build/app/Sleeper.app
 rm -rf "$APP"
@@ -19,8 +23,8 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundleIdentifier</key><string>dev.neel.sleeper</string>
   <key>CFBundleExecutable</key><string>Sleeper</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleShortVersionString</key><string>0.1</string>
-  <key>CFBundleVersion</key><string>1</string>
+  <key>CFBundleShortVersionString</key><string>${VERSION}</string>
+  <key>CFBundleVersion</key><string>${BUILD}</string>
   <key>LSMinimumSystemVersion</key><string>26.0</string>
   <key>LSUIElement</key><true/>
   <key>NSHighResolutionCapable</key><true/>
