@@ -61,7 +61,7 @@ import SwiftUI
     func resize(_ input: NotchHandleInput) {
         guard let panel else { return }
         switch input {
-        case .began(let p): resizeStart = (p, size.height, panel.frame.maxY)
+        case .began(let p): resizeStart = (pointer: p, height: Double(size.height), top: Double(panel.frame.maxY))
         case .changed(let p):
             guard let s = resizeStart else { return }
             setHeight(NotchResize.live(proposed: s.height + (s.pointer.y - p.y), min: minHeight, max: maxHeight, reduceMotion: false), top: s.top)
